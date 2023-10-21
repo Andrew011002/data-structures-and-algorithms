@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <functions.h>
 using namespace std;
 
 void insertion_sort(vector<int> &arr) {
@@ -13,14 +14,6 @@ void insertion_sort(vector<int> &arr) {
             j--;
         }
     }
-}
-
-void print_array(vector<int> vect) {
-    cout << "[ ";
-    for (int i = 0; i < vect.size(); i++) {
-        cout << vect[i] << " ";
-    }
-    cout << "]\n";
 }
 
 int main() {

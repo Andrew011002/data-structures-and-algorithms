@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <functions.h>
 using namespace std;
 
 void merge(vector<int> &arr, int start, int mid, int end) {
@@ -47,14 +48,6 @@ void merge_sort(vector<int> &arr, int start, int end) {
 
     // start merging our sorted subarrays
     merge(arr, start, mid, end);
-}
-
-void print_array(vector<int> vect) {
-    cout << "[ ";
-    for (int i = 0; i < vect.size(); i++) {
-        cout << vect[i] << " ";
-    }
-    cout << "]\n";
 }
 
 int main() {
