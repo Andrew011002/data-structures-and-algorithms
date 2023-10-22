@@ -47,4 +47,8 @@ int main() {
     vect = {4, 3, 2, 1, 0, 3, 8, 9, -1, 20};
     quick_sort(vect, 0, vect.size() - 1);
     print_array(vect);
+
+    vect = {3, 2, 1, 5, 6, 4};
+    quick_sort(vect, 0, vect.size() - 1);
+    print_array(vect);
 }
