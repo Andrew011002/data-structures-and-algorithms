@@ -3,53 +3,50 @@
 #include "node.hpp"
 using namespace std;
 
-struct BinarySearchTree {
-
-    Node *root;
-
-    BinarySearchTree(Node *node) {
-        root = node;
+bool search(Node *node, int val) {
+    if (node == nullptr) {
+        return false;
+    } else if (node->val > val) {
+        return search(node->left, val);
+    } else if (node->val < val) {
+        return search(node->right, val);
     }
+    return true;
+}
 
-    bool search(Node *node, int val) {
-        if (node == nullptr) {
-            return false;
-        }
-
-        if (node->val == val) {
-            return true;
-        }
-        if (node->val > val) {
-            return search(node->left, val);
-        } else {
-            return search(node->right, val);
-        }
+Node* insert(Node *node, int val) {
+    if (node == nullptr) {
+        return new Node(val);
     }
-};
+    if (node->val > val) {
+        node->left = insert(node->left, val);
+    } else if (node->val < val) {
+        node->right = insert(node->right, val);
+    }
+    return node;
+}
 
 int main() {
 
-    Node a = Node(5);
-    Node b = Node(3);
-    Node c = Node(7);
-    Node d = Node(2);
-    Node e = Node(4);
+    Node bst = Node(6);
+    assert(search(&bst, 6) == true);
+    assert(search(&bst, 1) == false);
+    cout << "search() tests passed\n";
+    
+    insert(&bst, 8);
+    insert(&bst, 2);
+    insert(&bst, 1);
+    insert(&bst, 3);
 
-    a.left = &b;
-    a.right = &c;
-    b.left = &d;
-    b.right = &e;
+    assert(search(&bst, 8) == true);
+    assert(search(&bst, 2) == true);
+    assert(search(&bst, 1) == true);
+    assert(search(&bst, 3) == true);
 
-    BinarySearchTree bst = BinarySearchTree(&a);
+    assert(bst.left->val == 2);
+    assert(bst.right->val == 8);
+    assert(bst.left->left->val == 1);
+    assert(bst.left->right->val == 3);
 
-    assert (bst.search(&a, 7) == true);
-    assert (bst.search(&a, 4) == true);
-    assert (bst.search(&b, 2) == true);
-    assert (bst.search(&a, 3) == true);
-
-    assert (bst.search(&c, 5) == false);
-    assert (bst.search(&b, 5) == false);
-    assert (bst.search(&b, 5) == false);
-    assert (bst.search(&e, 7) == false);
-
+    cout << "insert() tests passed\n";
 }
