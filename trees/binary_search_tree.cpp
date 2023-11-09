@@ -1,7 +1,9 @@
 #include <iostream>
 #include <assert.h>
+#include <vector>
 #include "node.hpp"
 #include "print_tree.hpp"
+#include "print_array.hpp"
 using namespace std;
 
 bool search(Node *node, int val) {
@@ -47,7 +49,6 @@ Node* remove(Node *node, int val) {
     if (!node) {
         return nullptr;
     }
-
     if (node->val < val) {
         node->right = remove(node->right, val);
     } else if (node->val > val) {
@@ -68,6 +69,42 @@ Node* remove(Node *node, int val) {
         }
     }
     return node;
+}
+
+void in_order(Node *node, vector<int> &vect) {
+    if (node == nullptr) {
+        return;
+    }
+    in_order(node->left, vect);
+    vect.push_back(node->val);
+    in_order(node->right, vect); 
+}
+
+void pre_order(Node *node, vector<int> &vect) {
+    if (node == nullptr) {
+        return;
+    }
+    vect.push_back(node->val);
+    pre_order(node->left, vect);
+    pre_order(node->right, vect);
+}
+
+void post_order(Node *node, vector<int> &vect) {
+    if (node == nullptr) {
+        return;
+    }
+    post_order(node->left, vect);
+    post_order(node->right, vect);
+    vect.push_back(node->val);
+}
+
+void reverse_order(Node *node, vector<int> &vect) {
+    if (node == nullptr) {
+        return;
+    }
+    reverse_order(node->right, vect);
+    vect.push_back(node->val);
+    reverse_order(node->left, vect);
 }
 
 int main() {
@@ -129,4 +166,29 @@ int main() {
     assert(bst2.left->right == nullptr);
 
     cout << "remove() tests passed\n";
+
+    Node bst3 = Node(7);
+
+    insert(&bst3, 8);
+    insert(&bst3, 9);
+    insert(&bst3, 5);
+    insert(&bst3, 6);
+    insert(&bst3, 0);
+
+    print_tree(&bst3);
+    vector<int> vect;
+    in_order(&bst3, vect);
+    print_array(vect);
+
+    vect.clear();
+    pre_order(&bst3, vect);
+    print_array(vect);
+
+    vect.clear();
+    post_order(&bst3, vect);
+    print_array(vect);
+
+    vect.clear();
+    reverse_order(&bst3, vect);
+    print_array(vect);
 }
