@@ -1,16 +1,26 @@
-#ifndef PRINT_TREE_H_INCLUDED
-#define PRINT_TREE_H_INCLUDED
+#ifndef PRINT_HELPER_H_INCLUDED
+#define PRINT_HELPER_H_INCLUDED
 
 #include <iostream>
 #include <string>
-#include "node.hpp"
+#include <vector>
+#include "bst.hpp"
 using namespace std;
+
+
+void print_array(vector<int> arr) {
+    cout << "[ ";
+    for (int i = 0; i < arr.size(); i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "]\n";
+}
 
 void print_tree_helper(Node *node, string prefix = "", bool isLeft = true) {
     if (node != nullptr) {
         cout << prefix;
         cout << (isLeft ? "├──" : "└──" );
-        cout << node->val << endl;
+        cout << node->data << endl;
         
         print_tree_helper(node->left, prefix + (isLeft ? "│   " : "    "), true);
         print_tree_helper(node->right, prefix + (isLeft ? "│   " : "    "), false);
