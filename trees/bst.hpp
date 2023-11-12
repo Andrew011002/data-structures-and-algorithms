@@ -31,7 +31,6 @@ struct Node {
     }
 };
 
-#include <vector>
 
 class BST {
 
