@@ -12,4 +12,12 @@ void print_array(int arr[], int size) {
     cout << "]" << endl;
 }
 
+void print_vector(vector<int> vec) {
+    cout << "[ ";
+    for (int i=0; i < vec.size(); i++) {
+        cout << vec[i] << " ";
+    }
+    cout << "]" << endl;
+}
+
 #endif
