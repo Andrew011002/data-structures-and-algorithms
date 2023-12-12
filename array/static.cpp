@@ -20,10 +20,10 @@ public:
     }
 
     StaticArray(int array[], int nelem, int capacity) {
-    }
-
-    void insert() {
-
+        arr = array;
+        ptr = arr;
+        size = nelem;
+        cap = capacity;
     }
 
     void append(int elem) {
@@ -32,7 +32,28 @@ public:
         size++;
     }
 
-    void remove() {
+    void insert(int value, int index) {
+        if (size == 0 || index >= size) {
+            append(value);
+            return;
+        }
+
+        int* tmp_ptr = arr;
+        for (int i=0; i < index; i++) {
+            tmp_ptr++;
+        }
+
+        for (int i=index; i < size + 1; i++) {
+            int tmp = *tmp_ptr;
+            *tmp_ptr = value;
+            value = tmp;
+            tmp_ptr++;
+        }
+        ptr = tmp_ptr;
+        size++;
+    }
+
+    void remove(int index) {
 
     }
     
@@ -48,16 +69,16 @@ public:
     }
 
     void print() {
-        int* temp = arr;
+        int* tmp = arr;
         cout << "[ ";
         for (int i = 0; i < size; i++) {
-           cout << *temp << " "; 
-           temp++;
+           cout << *tmp << " "; 
+           tmp++;
         }        
         cout << "]" << endl;
     }
 
-    int len() {
+    int length() {
         return size;
     }
 
@@ -65,11 +86,28 @@ public:
         return cap;
     }
 
+    bool empty() {
+        return size == 0;
+    }
+
+    void clear() {
+        for (int i=0; i < size; i++) {
+            *ptr = 0;
+            ptr--;
+        }
+        size = 0;
+    }
+
 };
 
 int main() { 
     StaticArray arr = StaticArray(10);
     arr.append(15);
-    arr.pop();
+    arr.append(18);
+    arr.append(23);
+    arr.append(17);
+    arr.append(2);
+    arr.print();
+    arr.insert(69, 3);
     arr.print();
 }
