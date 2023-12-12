@@ -2,6 +2,7 @@
 #define PRINT_H_HEADER_FILE
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 void print_array(int arr[], int size) {
