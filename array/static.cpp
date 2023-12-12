@@ -16,15 +16,10 @@ public:
     StaticArray(int capacity) {
         arr = new int[capacity];
         ptr = arr;
-        size = 0;
         cap = capacity;
     }
 
     StaticArray(int array[], int nelem, int capacity) {
-        arr = array;
-        ptr = arr;
-        size = nelem;
-        cap = capacity;
     }
 
     void insert() {
@@ -39,6 +34,17 @@ public:
 
     void remove() {
 
+    }
+    
+    int pop() {
+        if (size > 0) {
+            int val = *ptr;
+            *ptr = 0;
+            ptr--;
+            size--;
+            return val; 
+        }
+        return 0;
     }
 
     void print() {
@@ -63,12 +69,7 @@ public:
 
 int main() { 
     StaticArray arr = StaticArray(10);
-    arr.append(10);
-    arr.append(11);
+    arr.append(15);
+    arr.pop();
     arr.print();
-
-    int array[10] = {1, 2, 3};
-    arr = StaticArray(array, 3, 10);
-    arr.print(); 
-    cout << arr.len() << " " << arr.capacity() << endl;
 }
