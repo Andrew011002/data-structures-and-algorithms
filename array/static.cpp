@@ -33,8 +33,7 @@ public:
         }
 
         if (index >= size) {
-            cout << "here" << endl;
-            *(ptr - 1);
+            return *(ptr - 1);
         }
 
         int* tmp_ptr = arr;
@@ -148,8 +147,8 @@ public:
 
     void clear() {
         for (int i=0; i < size; i++) {
-            *ptr = 0;
             ptr--;
+            *ptr = 0;
         }
         size = 0;
     }
