@@ -28,7 +28,20 @@ public:
     }
 
     int get(int index) {
-        return 0;
+        if (empty()) {        
+            return 0;
+        }
+
+        if (index >= size) {
+            cout << "here" << endl;
+            *(ptr - 1);
+        }
+
+        int* tmp_ptr = arr;
+        for (int i=0; i < index; i++) {
+            tmp_ptr++;
+        }
+        return *tmp_ptr;
     }
 
     void append(int elem) {
@@ -151,6 +164,7 @@ int main() {
     arr.print();
     cout << "length: " << arr.length() << endl;
     cout << "is full: " << arr.full() << endl;
+    // arr.get(5);
     arr.remove(9);
     arr.print();
     cout << "length: " << arr.length() << endl;
@@ -166,5 +180,6 @@ int main() {
     arr.print();
     cout << "length: " << arr.length() << endl;
     cout << "is full: " << arr.full() << endl;
-
+    int val = arr.get(5);
+    cout << val << endl;
 }
