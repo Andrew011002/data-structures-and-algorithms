@@ -16,6 +16,7 @@ public:
     StaticArray(int capacity) {
         arr = new int[capacity];
         ptr = arr;
+        size = 0;
         cap = capacity;
     }
 
@@ -24,6 +25,10 @@ public:
         ptr = arr;
         size = nelem;
         cap = capacity;
+    }
+
+    int get(int index) {
+        return 0;
     }
 
     void append(int elem) {
@@ -88,6 +93,10 @@ public:
 
     bool empty() {
         return size == 0;
+    }
+    
+    bool full() {
+        return size == capacity();
     }
 
     void clear() {
