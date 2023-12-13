@@ -32,12 +32,20 @@ public:
     }
 
     void append(int elem) {
+        if (full()) {
+            return;
+        }
+
         *ptr = elem;
         ptr++;
         size++;
     }
 
     void insert(int value, int index) {
+        if (full()) {
+            return;
+        }
+
         if (size == 0 || index >= size) {
             append(value);
             return;
@@ -58,8 +66,33 @@ public:
         size++;
     }
 
-    void remove(int index) {
+    void remove(int value) {
+        if (empty()) {
+            return;
+        }
 
+        bool found = false;
+        int* tmp_ptr = arr;
+        int index;
+        
+        for (int i=0; i < size; i++) {
+            if (*tmp_ptr == value) {
+                index = i;
+                found = true;
+                break;
+            }
+            tmp_ptr++;
+        }
+
+        if (found) {
+            for (int i=index; i < size - 1; i++) {
+                value = *(tmp_ptr + 1);
+                *tmp_ptr = value;
+                tmp_ptr++;
+            }
+            ptr = tmp_ptr;
+            size--;
+        }
     }
     
     int pop() {
@@ -111,12 +144,19 @@ public:
 
 int main() { 
     StaticArray arr = StaticArray(10);
+    for (int i=0; i < 10; i++) {
+        arr.append(i * i);
+    }
+    arr.print();
+    cout << "length: " << arr.length() << endl;
+    cout << "is full: " << arr.full() << endl;
+    arr.remove(9);
+    arr.print();
+    cout << "length: " << arr.length() << endl;
+    cout << "is full: " << arr.full() << endl;
     arr.append(15);
-    arr.append(18);
-    arr.append(23);
-    arr.append(17);
-    arr.append(2);
     arr.print();
-    arr.insert(69, 3);
-    arr.print();
+    cout << "length: " << arr.length() << endl;
+    cout << "is full: " << arr.full() << endl;
+
 }
