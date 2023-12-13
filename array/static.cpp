@@ -96,14 +96,15 @@ public:
     }
     
     int pop() {
-        if (size > 0) {
-            int val = *ptr;
-            *ptr = 0;
-            ptr--;
-            size--;
-            return val; 
+        if (empty()) {
+            return 0;
         }
-        return 0;
+
+        int val = *ptr;
+        *ptr = 0;
+        ptr--;
+        size--;
+        return val; 
     }
 
     void print() {
@@ -129,7 +130,7 @@ public:
     }
     
     bool full() {
-        return size == capacity();
+        return size == cap;
     }
 
     void clear() {
@@ -155,6 +156,13 @@ int main() {
     cout << "length: " << arr.length() << endl;
     cout << "is full: " << arr.full() << endl;
     arr.append(15);
+    arr.print();
+    cout << "length: " << arr.length() << endl;
+    cout << "is full: " << arr.full() << endl;
+    arr.append(15);
+    arr.print();
+    arr.clear();
+    arr.append(16);
     arr.print();
     cout << "length: " << arr.length() << endl;
     cout << "is full: " << arr.full() << endl;
