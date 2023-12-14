@@ -1,184 +1,148 @@
 #include <iostream>
+#include <string>
+#include "./static.hpp"
 #include "../print.hpp"
 using namespace std;
 
-struct StaticArray {
 
-private:
+StaticArray::StaticArray(int capacity) {
+    arr = new int[capacity];
+    ptr = arr;
+    nelem = 0;
+    cap = capacity;
+}
 
-    int* arr;
-    int* ptr;
-    int size;
-    int cap;
+StaticArray::StaticArray(int array[], int size, int capacity) {
+    arr = array;
+    ptr = arr;
+    nelem = size;
+    cap = capacity;
+}
 
-public:
+    
+void StaticArray::in_bounds_check(int index, string msg) {
+    if (index < 0 || index >= nelem) {
+        throw out_of_range(msg);
+    }
+}
 
-    StaticArray(int capacity) {
-        arr = new int[capacity];
-        ptr = arr;
-        size = 0;
-        cap = capacity;
+void StaticArray::can_add_check(string msg) {
+    if (nelem == cap) {
+        throw length_error(msg);
+    }
+}
+
+void StaticArray::can_retrieve_check(string msg) {
+    if (nelem == 0) {
+        throw length_error(msg);
+    }
+}
+
+int* StaticArray::move_ptr_to_index(int *ptr, int index) {
+    int* tmp_ptr = ptr;
+    for (int i=0; i < index; i++) {
+        tmp_ptr++; 
+    }
+    return tmp_ptr;
+}
+
+
+int StaticArray::get(int index) {
+    can_retrieve_check("cannot get, array is empty");
+    in_bounds_check(index, "index out of bounds");
+    return *(ptr + index);
+}
+
+void StaticArray::append(int elem) {
+    can_add_check("array is full, cannot append");
+    *ptr = elem;
+    ptr++;
+    nelem++;
+}
+
+void StaticArray::insert(int elem, int index) {
+    can_add_check("array is full, cannot insert");
+    in_bounds_check(index, "index out of bounds");
+
+    if (nelem == 0 || index == nelem - 1) {
+        append(elem);
+        return;
     }
 
-    StaticArray(int array[], int nelem, int capacity) {
-        arr = array;
-        ptr = arr;
-        size = nelem;
-        cap = capacity;
+    int* tmp_ptr = move_ptr_to_index(arr, index);
+    for (int i=index; i < nelem + 1; i++) {
+        int tmp = *tmp_ptr;
+        *tmp_ptr = elem;
+        elem = tmp;
+        tmp_ptr++;
+    }
+    ptr = tmp_ptr;
+    nelem++;
+}
+
+void StaticArray::remove(int value) {
+    can_retrieve_check("array is empty, cannot remove");
+    bool found = false;
+    int* tmp_ptr = arr;
+    int index;
+    
+    for (int i=0; i < nelem; i++) {
+        if (*tmp_ptr == value) {
+            index = i;
+            found = true;
+            break;
+        }
+        tmp_ptr++;
     }
 
-    int get(int index) {
-        if (empty()) {        
-            return 0;
-        }
-
-        if (index >= size) {
-            return *(ptr - 1);
-        }
-
-        int* tmp_ptr = arr;
-        for (int i=0; i < index; i++) {
-            tmp_ptr++;
-        }
-        return *tmp_ptr;
-    }
-
-    void append(int elem) {
-        if (full()) {
-            return;
-        }
-
-        *ptr = elem;
-        ptr++;
-        size++;
-    }
-
-    void insert(int value, int index) {
-        if (full()) {
-            return;
-        }
-
-        if (size == 0 || index >= size) {
-            append(value);
-            return;
-        }
-
-        int* tmp_ptr = arr;
-        for (int i=0; i < index; i++) {
-            tmp_ptr++;
-        }
-
-        for (int i=index; i < size + 1; i++) {
-            int tmp = *tmp_ptr;
-            *tmp_ptr = value;
-            value = tmp;
+    if (found) {
+        for (int i=index; i < nelem - 1; i++) {
+            *tmp_ptr = *(tmp_ptr + 1);
             tmp_ptr++;
         }
         ptr = tmp_ptr;
-        size++;
+        nelem--;
     }
+}
 
-    void remove(int value) {
-        if (empty()) {
-            return;
-        }
+int StaticArray::pop() {
+    can_retrieve_check("array is empty, cannot pop");
+    int val = *(ptr - 1);
+    ptr--;
+    nelem--;
+    return val; 
+}
 
-        bool found = false;
-        int* tmp_ptr = arr;
-        int index;
-        
-        for (int i=0; i < size; i++) {
-            if (*tmp_ptr == value) {
-                index = i;
-                found = true;
-                break;
-            }
-            tmp_ptr++;
-        }
+void StaticArray::print() {
+    int* tmp = arr;
+    cout << "[ ";
+    for (int i = 0; i < nelem; i++) {
+        cout << *tmp << " "; 
+        tmp++;
+    }        
+    cout << "]" << endl;
+}
 
-        if (found) {
-            for (int i=index; i < size - 1; i++) {
-                value = *(tmp_ptr + 1);
-                *tmp_ptr = value;
-                tmp_ptr++;
-            }
-            ptr = tmp_ptr;
-            size--;
-        }
-    }
-    
-    int pop() {
-        if (empty()) {
-            return 0;
-        }
+int StaticArray::size() {
+    return nelem;
+}
 
-        int val = *ptr;
-        *ptr = 0;
+int StaticArray::capacity() {
+    return cap;
+}
+
+bool StaticArray::empty() {
+    return nelem == 0;
+}
+
+bool StaticArray::full() {
+    return nelem == cap;
+}
+
+void StaticArray::clear() {
+    for (int i=0; i < nelem; i++) {
         ptr--;
-        size--;
-        return val; 
+        *ptr = 0;
     }
-
-    void print() {
-        int* tmp = arr;
-        cout << "[ ";
-        for (int i = 0; i < size; i++) {
-           cout << *tmp << " "; 
-           tmp++;
-        }        
-        cout << "]" << endl;
-    }
-
-    int length() {
-        return size;
-    }
-
-    int capacity() {
-        return cap;
-    }
-
-    bool empty() {
-        return size == 0;
-    }
-    
-    bool full() {
-        return size == cap;
-    }
-
-    void clear() {
-        for (int i=0; i < size; i++) {
-            ptr--;
-            *ptr = 0;
-        }
-        size = 0;
-    }
-
-};
-
-int main() { 
-    StaticArray arr = StaticArray(10);
-    for (int i=0; i < 10; i++) {
-        arr.append(i * i);
-    }
-    arr.print();
-    cout << "length: " << arr.length() << endl;
-    cout << "is full: " << arr.full() << endl;
-    // arr.get(5);
-    arr.remove(9);
-    arr.print();
-    cout << "length: " << arr.length() << endl;
-    cout << "is full: " << arr.full() << endl;
-    arr.append(15);
-    arr.print();
-    cout << "length: " << arr.length() << endl;
-    cout << "is full: " << arr.full() << endl;
-    arr.append(15);
-    arr.print();
-    arr.clear();
-    arr.append(16);
-    arr.print();
-    cout << "length: " << arr.length() << endl;
-    cout << "is full: " << arr.full() << endl;
-    int val = arr.get(5);
-    cout << val << endl;
+    nelem = 0;
 }
