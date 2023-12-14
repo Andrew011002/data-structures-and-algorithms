@@ -50,7 +50,7 @@ int* StaticArray::move_ptr_to_index(int *ptr, int index) {
 int StaticArray::get(int index) {
     can_retrieve_check("cannot get, array is empty");
     in_bounds_check(index, "index out of bounds");
-    return *(ptr + index);
+    return *(arr + index);
 }
 
 void StaticArray::append(int elem) {
