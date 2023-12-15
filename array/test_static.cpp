@@ -5,8 +5,8 @@
 using namespace std;
 
 void test_get() {
-    int testArray[5] = {10, 20, 30, 40, 50};
-    StaticArray arr = StaticArray(testArray, 5, 10);
+    int test_array[5] = {10, 20, 30, 40, 50};
+    StaticArray arr = StaticArray(test_array, 5, 10);
     assert(arr.get(0) == 10);
     assert(arr.get(1) == 20);
     assert(arr.get(4) == 50);
@@ -17,6 +17,8 @@ void test_get() {
         assert(true);
     }
 }
+
+
 
 void test_append() {
     StaticArray arr = StaticArray(5);
@@ -81,8 +83,65 @@ void test_insert() {
     }
 }
 
+void test_remove() {
+    int test_array[5] = {10, 20, 30, 40};
+    StaticArray arr = StaticArray(test_array, 4, 5); 
+
+    arr.remove(20);
+    assert(arr.size() == 3);
+    assert(arr.get(1) == 30);
+
+    arr.remove(10);
+    assert(arr.size() == 2);
+    assert(arr.get(0) == 30);
+
+    try {
+        arr.remove(50);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+
+    arr.remove(30);
+    arr.remove(40);
+    try {
+        arr.remove(1);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+void test_write() {
+    StaticArray arr = StaticArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    arr.write(1, 99);
+    assert(arr.get(1) == 99);
+    assert(arr.size() == 3);
+
+    arr.write(0, 88);
+    assert(arr.get(0) == 88);
+
+    arr.write(4, 77); 
+    assert(arr.get(4) == 77);
+    arr.print();
+    try {
+        arr.write(5, 66);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+
 int main() {
     test_get();
     test_append();
     test_insert();
+    test_remove();
+    test_write();
 }
