@@ -18,8 +18,6 @@ void test_get() {
     }
 }
 
-
-
 void test_append() {
     StaticArray arr = StaticArray(5);
 
@@ -128,9 +126,32 @@ void test_write() {
 
     arr.write(4, 77); 
     assert(arr.get(4) == 77);
-    arr.print();
     try {
         arr.write(5, 66);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+void test_pop() {
+    StaticArray arr = StaticArray(5);
+
+    arr.append(10);
+    arr.append(69);
+    arr.append(30);
+
+    assert(arr.pop() == 30);
+    assert(arr.size() == 2);
+
+    assert(arr.pop() == 69);
+    assert(arr.size() == 1);
+
+    assert(arr.pop() == 10);
+    assert(arr.size() == 0);
+
+    try {
+        arr.pop();
         assert(false);
     } catch (const exception) {
         assert(true);
@@ -144,4 +165,5 @@ int main() {
     test_insert();
     test_remove();
     test_write();
+    test_pop();
 }
