@@ -8,22 +8,19 @@ using namespace std;
 
 struct StaticArray {
     private:
-        int* arr;
+        int* arr_ptr;
         int* ptr;
         int nelem;
         int cap;
 
-        void in_bounds_check(int index, string msg);
-        void can_add_check(string msg);
-        void can_retrieve_check(string msg);
-        int* move_ptr_to_index(int* ptr, int index);
 
     public:
         StaticArray(int capacity);
         StaticArray(int array[], int size, int capacity);
         int get(int index);
+        void write(int index, int elem);
         void append(int elem);
-        void insert(int elem, int index);
+        void insert(int index, int elem);
         void remove(int elem);
         int pop();
         int size();
