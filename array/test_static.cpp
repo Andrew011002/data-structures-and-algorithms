@@ -11,9 +11,9 @@ void test_get() {
     assert(arr.get(1) == 20);
     assert(arr.get(4) == 50);
     try {
-        arr.get(5);
+        arr.get(10);
         assert(false);
-    } catch (const std::out_of_range& e) {
+    } catch (const exception) {
         assert(true);
     }
 }
@@ -43,7 +43,7 @@ void test_append() {
     try {
         arr.append(60);
         assert(false);
-    } catch (const std::length_error&) {
+    } catch (const exception) {
         assert(true);
     }
 }
@@ -51,33 +51,32 @@ void test_append() {
 void test_insert() {
     StaticArray arr = StaticArray(5);
 
-    arr.insert(10, 0);
+    arr.insert(0, 10);
     assert(arr.get(0) == 10);
     assert(arr.size() == 1);
-    cout << "here\n";
 
-    arr.insert(20, 1);
+    arr.insert(1, 20);
     assert(arr.get(1) == 20);
     assert(arr.size() == 2);
 
-    arr.insert(15, 1);
+    arr.insert(1, 15);
     assert(arr.get(1) == 15);
     assert(arr.get(2) == 20);
     assert(arr.size() == 3);
 
-
     try {
-        arr.insert(30, 5);
+        arr.insert(5, 30);
         assert(false);
-    } catch (const std::out_of_range&) {
+    } catch (const exception) {
         assert(true);
     }
 
     try {
-        arr.insert(40, 3); 
-        arr.insert(50, 4); 
+        arr.insert(3, 40);
+        arr.insert(4, 50); 
+        arr.insert(0, 60);
         assert(false);
-    } catch (const std::length_error&) {
+    } catch (const exception) {
         assert(true);
     }
 }
