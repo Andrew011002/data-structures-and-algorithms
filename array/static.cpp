@@ -44,13 +44,13 @@ void StaticArray::append(int elem) {
 }
 
 void StaticArray::insert(int index, int elem) {
-    if (index < 0 || index > cap) {
+    if (index < 0 || index > nelem) {
         throw exception();
     }
     if (nelem == cap) {
         throw exception();
     }
-    if (index == cap) {
+    if (index == nelem) {
         append(elem);
         return;
     }
@@ -111,7 +111,7 @@ int StaticArray::pop() {
 void StaticArray::print() {
     int* tmp_ptr = arr_ptr;
     cout << "[ ";
-    for (int i = 0; i < nelem + 20; i++) {
+    for (int i = 0; i < nelem; i++) {
         cout << *tmp_ptr << " "; 
         tmp_ptr++;
     }        
@@ -140,16 +140,4 @@ bool StaticArray::empty() {
 
 bool StaticArray::full() {
     return nelem == cap;
-}
-
-
-int main() {
-    StaticArray arr = StaticArray(10);
-    arr.append(10);
-    arr.insert(0, 5);
-    arr.insert(2, 3);
-    arr.print();
-    arr.insert(2, 7);
-    arr.remove(3);
-    arr.clear();
 }
