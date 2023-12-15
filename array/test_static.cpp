@@ -158,6 +158,29 @@ void test_pop() {
     }
 }
 
+void test_other() {
+    StaticArray arr = StaticArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+    arr.append(40);
+    arr.append(50);
+    assert(arr.capacity() == 5);
+    assert(arr.full());
+    arr.clear();
+    assert(arr.empty());
+    assert(arr.size() == 0);
+    assert(arr.get(0) == 0);
+    assert(arr.get(4) == 0);
+    try {
+        arr.get(5);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
 
 int main() {
     test_get();
@@ -166,4 +189,5 @@ int main() {
     test_remove();
     test_write();
     test_pop();
+    test_other();
 }
