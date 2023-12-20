@@ -14,7 +14,7 @@ StaticArray::StaticArray(int capacity) {
 
 StaticArray::StaticArray(int array[], int size, int capacity) {
     arr_ptr = array;
-    ptr = arr_ptr;
+    ptr = arr_ptr + size;
     nelem = size;
     cap = capacity;
 }
@@ -35,7 +35,7 @@ void StaticArray::write(int index, int elem) {
 }
 
 void StaticArray::append(int elem) {
-    if (nelem == cap) {
+    if (full()) {
         throw exception();
     }
     *ptr = elem;
@@ -47,7 +47,7 @@ void StaticArray::insert(int index, int elem) {
     if (index < 0 || index > nelem) {
         throw exception();
     }
-    if (nelem == cap) {
+    if (full()) {
         throw exception();
     }
     if (index == nelem) {
@@ -73,7 +73,7 @@ void StaticArray::insert(int index, int elem) {
 }
 
 void StaticArray::remove(int value) {
-    if (nelem == 0) {
+    if (empty()) {
         throw exception();
     }
     bool found = false;
@@ -101,7 +101,7 @@ void StaticArray::remove(int value) {
 }
 
 int StaticArray::pop() {
-    if (nelem == 0) {
+    if (empty()) {
         throw exception();
     }
     nelem--;

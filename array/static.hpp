@@ -17,9 +17,9 @@ struct StaticArray {
         StaticArray(int capacity);
         StaticArray(int array[], int size, int capacity);
         int get(int index);
-        void write(int index, int elem);
-        void append(int elem);
-        void insert(int index, int elem);
+        virtual void write(int index, int elem);
+        virtual void append(int elem);
+        virtual void insert(int index, int elem);
         void remove(int elem);
         int pop();
         int size();
