@@ -190,4 +190,5 @@ int main() {
     test_write();
     test_pop();
     test_other();
+    cout << "All tests passed" << endl;
 }

@@ -7,12 +7,11 @@
 using namespace std;
 
 struct StaticArray {
-    private:
+    protected:
         int* arr_ptr;
         int* ptr;
         int nelem;
         int cap;
-
 
     public:
         StaticArray(int capacity);
