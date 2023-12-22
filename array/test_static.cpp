@@ -82,7 +82,7 @@ void test_insert() {
 }
 
 void test_remove() {
-    int test_array[5] = {10, 20, 30, 40};
+    int test_array[] = {10, 20, 30, 40};
     StaticArray arr = StaticArray(test_array, 4, 5); 
 
     arr.remove(20);
@@ -92,6 +92,7 @@ void test_remove() {
     arr.remove(10);
     assert(arr.size() == 2);
     assert(arr.get(0) == 30);
+    
 
     try {
         arr.remove(50);

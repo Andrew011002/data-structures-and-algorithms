@@ -13,10 +13,15 @@ StaticArray::StaticArray(int capacity) {
 }
 
 StaticArray::StaticArray(int array[], int size, int capacity) {
-    arr_ptr = array;
-    ptr = arr_ptr + size;
+    arr_ptr = new int[capacity];
+    ptr = arr_ptr;
     nelem = size;
     cap = capacity;
+
+    for (int i=0; i < size; i++) {
+        *ptr = array[i];
+        ptr++;
+    }
 }
     
 
