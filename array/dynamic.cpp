@@ -51,4 +51,6 @@ int main() {
     arr.print();
     arr.append(10);
     arr.print();
+    arr.insert(0, 69);
+    arr.print();
 }
