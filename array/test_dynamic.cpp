@@ -18,6 +18,33 @@ void test_get() {
     }
 }
 
+void test_write() {
+    DynamicArray arr = DynamicArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    arr.write(1, 99);
+    assert(arr.get(1) == 99);
+    assert(arr.size() == 3);
+
+    arr.write(0, 88);
+    assert(arr.get(0) == 88);
+
+    arr.write(4, 77);
+    assert(arr.get(4) == 77);
+    assert(arr.size() == 3);
+
+    try {
+        arr.write(5, 66);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+
 void test_append() {
     DynamicArray arr = DynamicArray(5);
 
@@ -100,31 +127,7 @@ void test_remove() {
     }
 }
 
-void test_write() {
-    DynamicArray arr = DynamicArray(5);
 
-    arr.append(10);
-    arr.append(20);
-    arr.append(30);
-
-    arr.write(1, 99);
-    assert(arr.get(1) == 99);
-    assert(arr.size() == 3);
-
-    arr.write(0, 88);
-    assert(arr.get(0) == 88);
-
-    arr.write(4, 77); 
-    assert(arr.get(4) == 77);
-    assert(arr.size() == 5);
-
-    try {
-        arr.write(6, 66); 
-        assert(false);
-    } catch (const exception) {
-        assert(true);
-    }
-}
 
 void test_pop() {
     DynamicArray arr = DynamicArray(5);
@@ -150,14 +153,66 @@ void test_pop() {
     }
 }
 
+void test_other() {
+    DynamicArray arr = DynamicArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+    arr.append(40);
+    arr.append(50);
+    assert(arr.capacity() == 5);
+    assert(arr.full());
+
+    arr.append(60);
+    assert(arr.capacity() == 10);
+    assert(!arr.full());
+    assert(arr.size() == 6);
+    assert(arr.get(5) == 60);
+
+    arr.clear();
+    assert(arr.empty());
+    assert(arr.size() == 0);
+
+    try {
+        assert(arr.get(0) == 0);
+        assert(arr.get(4) == 0);
+    } catch (const exception) {
+        assert(false);
+    }
+}
+
+void test_resize() {
+    DynamicArray arr = DynamicArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    arr.resize(20);
+    assert(arr.capacity() == 20);
+    assert(arr.size() == 3);
+    assert(arr.get(0) == 10);
+    assert(arr.get(1) == 20);
+    assert(arr.get(2) == 30);
+
+    try {
+        arr.resize(5);
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
 
 
 int main() {
     test_get();
+    test_write();
     test_append();
     test_insert();
-    test_write();
     test_remove();
     test_pop();
+    test_other();
+    test_resize();
     cout << "All tests passed" << endl;
 }
