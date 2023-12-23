@@ -17,6 +17,7 @@ int main() {
     d_arr.print();
     printf("%d\n", d_arr.capacity());
     d_arr.append(69);
+    d_arr.insert(10, 18);
     d_arr.print();
     printf("%d\n", d_arr.capacity());
     printf("%d\n", d_arr.size());
