@@ -73,10 +73,10 @@ void StaticArray::remove(int value) {
     if (empty()) {
         throw exception();
     }
+
     bool found = false;
     int* tmp_ptr = arr_ptr;
     int index;
-    
     for (int i=0; i < nelem; i++) {
         if (*tmp_ptr == value) {
             index = i;
@@ -89,11 +89,13 @@ void StaticArray::remove(int value) {
     if (!found) {
         throw exception();
     }
+
     ptr = arr_ptr + index;
     for (int i=index; i < nelem - 1; i++) {
         *ptr = *(ptr + 1);
         ptr++;
     }
+    *ptr = 0;
     nelem--;
 }
 
