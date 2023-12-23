@@ -16,6 +16,7 @@ struct StaticArray {
     public:
         StaticArray(int capacity);
         StaticArray(int array[], int size, int capacity);
+        int get_arr_size(int array[]);
         int get(int index);
         virtual void write(int index, int elem);
         virtual void append(int elem);

@@ -18,12 +18,11 @@ StaticArray::StaticArray(int array[], int size, int capacity) {
     nelem = size;
     cap = capacity;
 
-    for (int i=0; i < size; i++) {
+    for (int i=0; i < nelem; i++) {
         *ptr = array[i];
         ptr++;
     }
 }
-    
 
 int StaticArray::get(int index) {
     if (index < 0 || index >= cap) {
@@ -60,20 +59,13 @@ void StaticArray::insert(int index, int elem) {
         return;
     }
     
-    int* tmp_ptr = arr_ptr;
-    for (int i=0; i < index; i++) {
-        if (i == index) {
-            break;
-        }
-        tmp_ptr++;
-    }
+    ptr = arr_ptr + index;
     for (int i=index; i < nelem + 1; i++) {
-        int tmp = *tmp_ptr;
-        *tmp_ptr = elem;
+        int tmp = *ptr;
+        *ptr = elem;
         elem = tmp;
-        tmp_ptr++;
+        ptr++;
     }
-    ptr = tmp_ptr;
     nelem++;
 }
 
@@ -97,11 +89,11 @@ void StaticArray::remove(int value) {
     if (!found) {
         throw exception();
     }
+    ptr = arr_ptr + index;
     for (int i=index; i < nelem - 1; i++) {
-        *tmp_ptr = *(tmp_ptr + 1);
-        tmp_ptr++;
+        *ptr = *(ptr + 1);
+        ptr++;
     }
-    ptr = tmp_ptr;
     nelem--;
 }
 
