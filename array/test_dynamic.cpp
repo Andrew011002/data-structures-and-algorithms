@@ -100,10 +100,64 @@ void test_remove() {
     }
 }
 
+void test_write() {
+    DynamicArray arr = DynamicArray(5);
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    arr.write(1, 99);
+    assert(arr.get(1) == 99);
+    assert(arr.size() == 3);
+
+    arr.write(0, 88);
+    assert(arr.get(0) == 88);
+
+    arr.write(4, 77); 
+    assert(arr.get(4) == 77);
+    assert(arr.size() == 5);
+
+    try {
+        arr.write(6, 66); 
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+void test_pop() {
+    DynamicArray arr = DynamicArray(5);
+
+    arr.append(10);
+    arr.append(69);
+    arr.append(30);
+
+    assert(arr.pop() == 30);
+    assert(arr.size() == 2);
+
+    assert(arr.pop() == 69);
+    assert(arr.size() == 1);
+
+    assert(arr.pop() == 10);
+    assert(arr.size() == 0);
+
+    try {
+        arr.pop(); 
+        assert(false);
+    } catch (const exception) {
+        assert(true);
+    }
+}
+
+
 
 int main() {
     test_get();
     test_append();
     test_insert();
+    test_write();
+    test_remove();
+    test_pop();
     cout << "All tests passed" << endl;
 }

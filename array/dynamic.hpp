@@ -12,7 +12,7 @@ public:
     void write(int index, int elem) override;
     void append(int elem) override; 
     void insert(int index, int elem) override;
-    void resize();
+    void resize(int capacity);
 };
 
 #endif
