@@ -44,13 +44,3 @@ void DynamicArray::resize() {
     ptr = new_ptr;
     cap *= 2;
 }
-
-int main() {
-    int array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    DynamicArray arr = DynamicArray(array, 10);
-    arr.print();
-    arr.append(10);
-    arr.print();
-    arr.insert(0, 69);
-    arr.print();
-}
