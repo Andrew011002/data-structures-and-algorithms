@@ -13,6 +13,9 @@ StaticArray::StaticArray(int capacity) {
 }
 
 StaticArray::StaticArray(int array[], int size, int capacity) {
+    if (size > capacity) {
+        throw exception();
+    }
     arr_ptr = new int[capacity];
     ptr = arr_ptr;
     nelem = size;
@@ -75,22 +78,21 @@ void StaticArray::remove(int value) {
     }
 
     bool found = false;
-    int* tmp_ptr = arr_ptr;
+    ptr = arr_ptr;
     int index;
     for (int i=0; i < nelem; i++) {
-        if (*tmp_ptr == value) {
+        if (*ptr == value) {
             index = i;
             found = true;
             break;
         }
-        tmp_ptr++;
+        ptr++;
     }
 
     if (!found) {
         throw exception();
     }
 
-    ptr = arr_ptr + index;
     for (int i=index; i < nelem - 1; i++) {
         *ptr = *(ptr + 1);
         ptr++;
@@ -108,11 +110,11 @@ int StaticArray::pop() {
 }
 
 void StaticArray::print() {
-    int* tmp_ptr = arr_ptr;
+    ptr = arr_ptr;
     cout << "[ ";
     for (int i = 0; i < nelem; i++) {
-        cout << *tmp_ptr << " "; 
-        tmp_ptr++;
+        cout << *ptr << " "; 
+        ptr++;
     }        
     cout << "]" << endl;
 }
