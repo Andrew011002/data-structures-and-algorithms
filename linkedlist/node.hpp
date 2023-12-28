@@ -14,7 +14,7 @@ struct Node {
         next = nullptr;
     }
     
-    string str() {
+    std::string str() {
         return std::to_string(val);
     }
 };
