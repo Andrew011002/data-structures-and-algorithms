@@ -18,7 +18,7 @@ public:
     // void remove(T item);
     // void overwrite(T item, T item);
     // bool contains(T item);
-    // void print();
+    void print();
     int size();
     bool empty();
 };
