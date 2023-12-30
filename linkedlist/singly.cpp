@@ -106,6 +106,24 @@ bool SinglyList<T>::contains(T item) {
 }
 
 template <typename T>
+int SinglyList<T>::indexof(T item) {
+    if (empty()) {
+        throw std::exception();
+    }
+    int index = 0;
+    int curr = 0;
+    Node<T>* node = head;
+    while (node != nullptr) {
+        if (node->val == item) {
+            return index;
+        }
+        node = node->next;
+        index++;
+    }
+    return -1;
+}
+
+template <typename T>
 void SinglyList<T>::overwrite(T item, int index) {
     if (empty() || index < 0 || index >= size()) {
         throw std::exception();
@@ -144,7 +162,5 @@ int main() {
         list.add(i * i);
     }
     list.print();
-    list.overwrite(10, 0);
-    list.print();
-    list.overwrite(0, 10);
+    std::cout << list.indexof(99) << "\n";
 }
