@@ -31,7 +31,7 @@ void SinglyList<T>::insert(T item, int index) {
     if (index > size()) {
         throw std::exception();
     }
-    
+
     if (index == 0) {
         Node<T>* old_head = head;
         head = new Node<T>(item);
@@ -46,6 +46,37 @@ void SinglyList<T>::insert(T item, int index) {
         node->next->next = next_node;
     }
     list_size++;
+}
+
+template <typename T>
+void SinglyList<T>::remove(T item) {
+    bool not_found = true;
+    Node<T>* previous_node = nullptr;
+    Node<T>* node = head;
+    while (node != nullptr) {
+        if (node->val == item) {
+            not_found = false;
+            break;
+        }
+        previous_node = node;
+        node = node->next;
+    }
+    if (not_found) {
+        throw std::exception();
+    }
+    if (node == head && head == tail) {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+    } else if (node == head) {
+        Node<T>* next_node = head->next;
+        delete head;
+        head = next_node;
+    } else {
+        previous_node->next = node->next;
+        delete node;
+    }
+    list_size--;
 }
 
 template <typename T>
@@ -73,6 +104,19 @@ int main() {
     SinglyList<int> list = SinglyList<int>();
     list.add(5);
     list.add(18);
-    list.insert(9, 3);
+    list.insert(9, 0);
+    printf("size: %d\n", list.size());
     list.print();
+    list.remove(18);
+    printf("size: %d\n", list.size());
+    list.print();
+    list.remove(5);
+    printf("size: %d\n", list.size());
+    list.print();
+    list.remove(9);
+    printf("size: %d\n", list.size());
+    list.print();
+    list.add(15);
+    list.print();
+    list.remove(9);
 }
