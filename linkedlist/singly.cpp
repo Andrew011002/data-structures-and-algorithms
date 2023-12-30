@@ -10,6 +10,18 @@ SinglyList<T>::SinglyList() {
 }
 
 template <typename T>
+T SinglyList<T>::get(int index) {
+    if (empty()|| index >= size() || index < 0) {
+        throw std::exception();
+    }
+    Node<T>* node = head;
+    for (int i=0; i < index; i++) {
+        node = node->next;
+    }
+    return node->val;
+}
+
+template <typename T>
 void SinglyList<T>::add(T item) {
     Node<T>* node = new Node<int>(item);
     if (head == nullptr) {
@@ -133,4 +145,12 @@ int main() {
     list.add(15);
     list.print();
     printf("%d\n", list.contains(10));
+    for (int i=0; i < 10; i++) {
+        list.add(i * i);
+    }
+    list.print();
+    printf("%d\n", list.get(0));
+    printf("%d\n", list.get(3));
+    printf("%d\n", list.get(10));
+    printf("%d\n", list.get(5));
 }

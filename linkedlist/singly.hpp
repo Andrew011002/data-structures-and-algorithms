@@ -13,6 +13,7 @@ protected:
 
 public:
     SinglyList();
+    T get(int index);
     void add(T item);
     void insert(T item, int index);
     void remove(T item);
