@@ -106,6 +106,18 @@ bool SinglyList<T>::contains(T item) {
 }
 
 template <typename T>
+void SinglyList<T>::overwrite(T item, int index) {
+    if (empty() || index < 0 || index >= size()) {
+        throw std::exception();
+    }
+    Node<T>* node = head;
+    for (int i=0; i < index; i++) {
+        node = node->next;
+    }
+    node->val = item;
+}
+
+template <typename T>
 int SinglyList<T>::size() {
     return list_size;
 }
@@ -128,29 +140,11 @@ void SinglyList<T>::print() {
 
 int main() {
     SinglyList<int> list = SinglyList<int>();
-    list.add(5);
-    list.add(18);
-    list.insert(9, 0);
-    printf("size: %d\n", list.size());
-    list.print();
-    list.remove(18);
-    printf("size: %d\n", list.size());
-    list.print();
-    list.remove(5);
-    printf("size: %d\n", list.size());
-    list.print();
-    list.remove(9);
-    printf("size: %d\n", list.size());
-    list.print();
-    list.add(15);
-    list.print();
-    printf("%d\n", list.contains(10));
     for (int i=0; i < 10; i++) {
         list.add(i * i);
     }
     list.print();
-    printf("%d\n", list.get(0));
-    printf("%d\n", list.get(3));
-    printf("%d\n", list.get(10));
-    printf("%d\n", list.get(5));
+    list.overwrite(10, 0);
+    list.print();
+    list.overwrite(0, 10);
 }

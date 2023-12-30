@@ -18,7 +18,7 @@ public:
     void insert(T item, int index);
     void remove(T item);
     bool contains(T item);
-    // void overwrite(T item, T item);
+    void overwrite(T item, int index);
     int size();
     bool empty();
     void print();
