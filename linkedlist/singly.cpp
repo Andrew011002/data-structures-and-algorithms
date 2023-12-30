@@ -24,18 +24,17 @@ void SinglyList<T>::add(T item) {
 
 template <typename T>
 void SinglyList<T>::insert(T item, int index) {
+    if (index > size()) {
+        throw std::exception();
+    }
     if (index == size()) {
         add(item);
         return;
     }
-    if (index > size()) {
-        throw std::exception();
-    }
-
     if (index == 0) {
-        Node<T>* old_head = head;
+        Node<T>* next_node = head;
         head = new Node<T>(item);
-        head->next = old_head;
+        head->next = next_node;
     } else {
         Node<T>* node = head;
         for (int i=0; i < index - 1; i++) {
@@ -80,6 +79,21 @@ void SinglyList<T>::remove(T item) {
 }
 
 template <typename T>
+bool SinglyList<T>::contains(T item) {
+    if (empty()) {
+        throw std::exception();
+    }
+    Node<T>* node = head;
+    while (node != nullptr) {
+        if (node->val == item) {
+            return true;
+        }
+        node = node->next;
+    }
+    return false;
+}
+
+template <typename T>
 int SinglyList<T>::size() {
     return list_size;
 }
@@ -118,5 +132,5 @@ int main() {
     list.print();
     list.add(15);
     list.print();
-    list.remove(9);
+    printf("%d\n", list.contains(10));
 }
