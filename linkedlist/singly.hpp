@@ -3,7 +3,6 @@
 #include "./node.hpp"
 
 template <typename T>
-
 struct SinglyList {
 
 protected:
