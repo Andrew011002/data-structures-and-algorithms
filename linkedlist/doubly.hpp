@@ -12,8 +12,9 @@ private:
 
 public:
     DoublyList();
-    DoublyList(T[] collection);
-    DoublyList(T[] array, int size);
+    DoublyList(const std::vector<T> &vec);
+    DoublyList(const std::array<T> &arr);
+    DoublyList(const int[] arr, int size);
     void add(T item);
     void insert(T item, int index);
     T get(int index);
