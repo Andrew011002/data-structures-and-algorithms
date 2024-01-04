@@ -13,7 +13,8 @@ private:
 public:
     DoublyList();
     DoublyList(const std::vector<T> &vec);
-    DoublyList(const std::array<T> &arr);
+    template <size_t N>
+    DoublyList(const std::array<T, N> &arr);
     DoublyList(const int[] arr, int size);
     void add(T item);
     void insert(T item, int index);
