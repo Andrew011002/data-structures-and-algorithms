@@ -112,6 +112,15 @@ Node<T>* DoublyList<T>::get_node(int index) {
 }
 
 template <typename T>
+void DoublyList<T>::write(T item, int index) {
+    if (empty() || index > size()) {
+        throw std::exception();
+    }
+    Node<T> *node = get_node(index);
+    node->val = item;
+}
+
+template <typename T>
 bool DoublyList<T>::contains(T item) {
     if (empty()) {
         throw std::exception();
@@ -169,8 +178,8 @@ int main() {
     DoublyList<int> list = DoublyList<int>(vec);
     list.print();
     for (int i=0; i < list.size(); i++) {
-        printf("%d ", list.indexof(list.get(i)));
+        list.write(list.get(i) * i, (i * i) % list.size());
     }
-    std::cout << "\n";
+    list.print();
     printf("%d\n", list.size());
 }

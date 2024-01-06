@@ -21,11 +21,12 @@ public:
     void insert(T item, int index);
     Node<T>* get_node(int index);
     T get(int index);
+    void write(T item, int index);
     bool contains(T item);
     int indexof(T item);
     void remove(T item);
+    void replace(T item, T other, int count);
     void replace(T item, T other);
-    void write(T item, int index);
     int size();
     void clear();
     bool empty();
