@@ -24,6 +24,9 @@ public:
     void write(T item, int index);
     bool contains(T item);
     int indexof(T item);
+    void remove_head();
+    void remove_tail();
+    void remove(T item, int count);
     void remove(T item);
     void replace(T item, T other, int count);
     void replace(T item, T other);

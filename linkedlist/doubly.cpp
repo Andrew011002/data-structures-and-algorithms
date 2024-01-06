@@ -153,6 +153,44 @@ int DoublyList<T>::indexof(T item) {
 }
 
 template <typename T>
+void DoublyList<T>::remove_head() {
+    if (empty()) {
+        throw std::exception();
+    }
+    if (size() == 1) {
+        clear();
+        return;
+    } 
+    head = head->next;
+    delete head->prev;
+    head->prev = nullptr;
+    list_size--;
+}
+
+template <typename T>
+void DoublyList<T>::remove_tail() {
+    if (empty()) {
+        throw std::exception();
+    }
+    if (size() == 1) {
+        clear();
+        return;
+    } 
+    tail = tail->prev;
+    delete tail->next;
+    tail->next = nullptr;
+    list_size--;
+}
+
+template <typename T>
+void DoublyList<T>::remove(T item, int count) {
+    if (empty() || !contains(item) || count < 0) {
+        throw std::exception();
+    }
+    Node<T> *node = head;
+}
+
+template <typename T>
 bool DoublyList<T>::empty() {
     return list_size == 0;
 }
