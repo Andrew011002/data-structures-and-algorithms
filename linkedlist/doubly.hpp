@@ -28,8 +28,8 @@ public:
     void remove_tail();
     void remove(T item, int count);
     void remove(T item);
-    void replace(T item, T other, int count);
-    void replace(T item, T other);
+    void replace(T item, T with, int count);
+    void replace(T item, T with);
     bool empty();
     int size();
     void clear();

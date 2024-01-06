@@ -213,6 +213,26 @@ void DoublyList<T>::remove(T item) {
 }
 
 template <typename T>
+void DoublyList<T>::replace(T item, T with, int count) {
+    if (empty() || count < 1) {
+        throw std::exception();
+    }
+    Node<T> *node = head;
+    while (node && count > 0) {
+        if (node->val == item) {
+            node->val = with;
+            count--;
+        }
+        node = node->next;
+    }
+}
+
+template <typename T>
+void DoublyList<T>::replace(T item, T with) {
+    replace(item, with, 1);
+}
+
+template <typename T>
 bool DoublyList<T>::empty() {
     return list_size == 0;
 }
@@ -244,6 +264,6 @@ void DoublyList<T>::print() {
 int main() {
     std::vector<int> vec = {1, 10, 3, 10, 5, 10, 7, 8, 9, 10};
     DoublyList<int> list = DoublyList<int>(vec);
-    list.remove(10, 4);
+    list.replace(10, 69, 100);
     list.print();
 }
