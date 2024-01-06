@@ -19,10 +19,10 @@ public:
     void add(T item);
     void add_head(T item);
     void insert(T item, int index);
-    T get(int index);
     Node<T>* get_node(int index);
-    int indexof(T item);
+    T get(int index);
     bool contains(T item);
+    int indexof(T item);
     void remove(T item);
     void replace(T item, T other);
     void write(T item, int index);
