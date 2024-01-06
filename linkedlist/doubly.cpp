@@ -81,6 +81,14 @@ void DoublyList<T>::insert(T item, int index) {
 }
 
 template <typename T>
+T DoublyList<T>::get(int index) {
+    if (empty() || index > size()) {
+        throw std::exception();
+    }
+    return get_node(index)->val;
+}
+
+template <typename T>
 Node<T>* DoublyList<T>::get_node(int index) {
     if (empty() || index > size()) {
         throw std::exception();
@@ -128,13 +136,9 @@ int main() {
     std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     DoublyList<int> list = DoublyList<int>(vec);
     list.print();
-    list.insert(69, 4);
-    list.print();
-    list.insert(23, 6);
-    list.print();
-    list.insert(18, 0);
-    list.print();
-    list.insert(19, 13);
-    list.print();
+    for (int i=0; i < list.size(); i++) {
+        printf("%d ", list.get(i));
+    }
+    std::cout << "\n";
     printf("%d\n", list.size());
 }
