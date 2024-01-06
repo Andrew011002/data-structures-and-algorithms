@@ -184,10 +184,32 @@ void DoublyList<T>::remove_tail() {
 
 template <typename T>
 void DoublyList<T>::remove(T item, int count) {
-    if (empty() || !contains(item) || count < 0) {
+    if (empty() || !contains(item) || count < 1) {
         throw std::exception();
     }
     Node<T> *node = head;
+    while (node && count > 0) {
+        Node<T> *next_node = node->next;
+        if (node->val == item) {
+            if (node == head) {
+                remove_head();
+            } else if (node == tail) {
+                remove_tail();
+            } else {
+                node->next->prev = node->prev;
+                node->prev->next = node->next;
+                delete node;
+                list_size--;
+            }
+            count--;
+        }
+        node = next_node;
+    }
+}
+
+template <typename T>
+void DoublyList<T>::remove(T item) {
+    remove(item, 1);
 }
 
 template <typename T>
@@ -220,17 +242,8 @@ void DoublyList<T>::print() {
 }
 
 int main() {
-    std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    std::vector<int> vec = {1, 10, 3, 10, 5, 10, 7, 8, 9, 10};
     DoublyList<int> list = DoublyList<int>(vec);
-    list.print();
-    for (int i=0; i < list.size(); i++) {
-        list.write(list.get(i) * i, (i * i) % list.size());
-    }
-    list.print();
-    printf("%d\n", list.size());
-    list.clear();
-    list.print();
-    printf("%d\n", list.size());
-    list.insert(0, -1);
+    list.remove(10, 4);
     list.print();
 }
