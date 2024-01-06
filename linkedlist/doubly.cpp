@@ -73,14 +73,14 @@ void DoublyList<T>::insert(T item, int index) {
     }
     Node<T> *node = nullptr;
     if (index <= size() - index) {
-        *node = head;
+        node = head;
         for (int i=0; i < index; i++) {
             node = node->next;
         }
     } else {
-        index = size() - index;
-        *node = tail;
+        node = tail;
         for (int i = size() - 1; i > index; i--) {
+            std::cout << i << " " << node->str() << "\n";
             node = node->prev;
         }
     }
@@ -113,11 +113,16 @@ void DoublyList<T>::print() {
 }
 
 int main() {
-    std::vector<int> vec = {1, 2, 3, 4, 5};
-    std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    int c_arr[] = {1, 2, 3, 4, 5};
-    int size = sizeof(c_arr) / sizeof(int);
-    DoublyList<int> list = DoublyList<int>(c_arr, size);
+    std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    DoublyList<int> list = DoublyList<int>(vec);
+    list.print();
+    list.insert(69, 4);
+    list.print();
+    list.insert(23, 6);
+    list.print();
+    list.insert(18, 0);
+    list.print();
+    list.insert(19, 13);
     list.print();
     printf("%d\n", list.size());
 }
