@@ -163,6 +163,14 @@ int DoublyList<T>::size() {
 }
 
 template <typename T>
+void DoublyList<T>::clear() {
+    delete head;
+    head = nullptr;
+    tail = nullptr;
+    list_size = 0;
+}
+
+template <typename T>
 void DoublyList<T>::print() {
     std::cout << "[ ";
     Node<T> *node = head;
@@ -182,4 +190,9 @@ int main() {
     }
     list.print();
     printf("%d\n", list.size());
+    list.clear();
+    list.print();
+    printf("%d\n", list.size());
+    list.insert(0, -1);
+    list.print();
 }

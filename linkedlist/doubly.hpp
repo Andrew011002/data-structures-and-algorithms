@@ -27,9 +27,9 @@ public:
     void remove(T item);
     void replace(T item, T other, int count);
     void replace(T item, T other);
+    bool empty();
     int size();
     void clear();
-    bool empty();
     void print();
 };
 
