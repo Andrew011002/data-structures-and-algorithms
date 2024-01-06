@@ -17,7 +17,9 @@ public:
     template <size_t N>
     DoublyList(const std::array<T, N> &arr);
     void add(T item);
+    void add_head(T item);
     void insert(T item, int index);
+    void insert_helper(Node<T> *node, Node<T> *new_node);
     T get(int index);
     int indexof(T item);
     bool contains(T item);
