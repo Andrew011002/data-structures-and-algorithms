@@ -19,8 +19,8 @@ public:
     void add(T item);
     void add_head(T item);
     void insert(T item, int index);
-    void insert_helper(Node<T> *node, Node<T> *new_node);
     T get(int index);
+    Node<T>* get_node(int index);
     int indexof(T item);
     bool contains(T item);
     void remove(T item);

@@ -71,6 +71,23 @@ void DoublyList<T>::insert(T item, int index) {
         add(item);
         return;
     }
+    Node<T> *node = get_node(index);
+    Node<T> *new_node = new Node<T>(item);
+    new_node->next = node;
+    new_node->prev = node->prev;
+    new_node->prev->next = new_node;
+    new_node->next->prev = new_node;   
+    list_size++;
+}
+
+template <typename T>
+Node<T>* DoublyList<T>::get_node(int index) {
+    if (empty() || index > size()) {
+        throw std::exception();
+    }
+    if (index < 0) {
+        index = index + size();
+    }
     Node<T> *node = nullptr;
     if (index <= size() - index) {
         node = head;
@@ -80,20 +97,15 @@ void DoublyList<T>::insert(T item, int index) {
     } else {
         node = tail;
         for (int i = size() - 1; i > index; i--) {
-            std::cout << i << " " << node->str() << "\n";
             node = node->prev;
         }
-    }
-    insert_helper(node, new Node<T>(item));
-    list_size++;
+    } 
+    return node;
 }
 
 template <typename T>
-void DoublyList<T>::insert_helper(Node<T> *node, Node<T> *new_node) {
-    new_node->next = node;
-    new_node->prev = node->prev;
-    new_node->prev->next = new_node;
-    new_node->next->prev = new_node;
+bool DoublyList<T>::empty() {
+    return list_size == 0;
 }
 
 template <typename T>
