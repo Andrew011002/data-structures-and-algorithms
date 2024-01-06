@@ -63,7 +63,10 @@ void DoublyList<T>::print() {
 
 int main() {
     std::vector<int> vec = {1, 2, 3, 4, 5};
-    DoublyList<int> list = DoublyList<int>(vec);
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    int c_arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(c_arr) / sizeof(int);
+    DoublyList<int> list = DoublyList<int>(c_arr, size);
     list.print();
     printf("%d\n", list.size());
 }
