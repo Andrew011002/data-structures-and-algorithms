@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include "doubly.hpp"
 #include "../utils/node.hpp"
-#include "./doubly.hpp"
 
 template <typename T>
 DoublyList<T>::DoublyList() {
