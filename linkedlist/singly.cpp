@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./node.hpp"
+#include "../utils/node.hpp"
 #include "./singly.hpp"
 
 template <typename T>
