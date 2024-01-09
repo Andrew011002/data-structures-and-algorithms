@@ -1,6 +1,6 @@
 #ifndef SINGLY_LIST_HPP
 #define SINGLY_LIST_HPP
-#include "./node.hpp"
+#include "../utils/node.hpp"
 
 template <typename T>
 struct SinglyList {

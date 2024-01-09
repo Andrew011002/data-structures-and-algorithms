@@ -1,6 +1,6 @@
 #ifndef DOUBLY_LIST_HPP
 #define DOUBLY_LIST_HPP
-#include "./node.hpp"
+#include "../utils/node.hpp"
 
 template <typename T>
 struct DoublyList {
