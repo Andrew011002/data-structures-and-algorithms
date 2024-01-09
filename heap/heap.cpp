@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../print.hpp"
+#include "../utils/print.hpp"
 using namespace std;
 
 struct Heap {
