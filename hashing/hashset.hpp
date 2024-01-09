@@ -17,9 +17,17 @@ public:
     HashSet(const T arr[], int size);
     HashSet(const std::array arr);
     HashSet(const std::vector vec);
-    hash(T item);
-    rehash();
-    add(T item);
+    int hash(T item);
+    void rehash();
+    void add(T item);
+    void remove(T item);
+    bool contains(T item);
+    bool issub(const T arr[], int size);
+    bool issub(const T std::array);
+    bool issub(const T std:vector);
+    bool empty();
+    int size();
+    void print();
 };
 
 #endif
