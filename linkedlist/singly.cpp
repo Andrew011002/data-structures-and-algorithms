@@ -155,12 +155,3 @@ void SinglyList<T>::print() {
     }
     std::cout << "]\n";
 }
-
-int main() {
-    SinglyList<int> list = SinglyList<int>();
-    for (int i=0; i < 10; i++) {
-        list.add(i * i);
-    }
-    list.print();
-    std::cout << list.indexof(99) << "\n";
-}

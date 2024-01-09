@@ -262,10 +262,3 @@ void DoublyList<T>::print() {
     }
     std::cout << "]\n";
 }
-
-int main() {
-    std::vector<int> vec = {1, 10, 3, 10, 5, 10, 7, 8, 9, 10};
-    DoublyList<int> list = DoublyList<int>(vec);
-    list.replace(10, 69, 100);
-    list.print();
-}
