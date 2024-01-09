@@ -8,23 +8,25 @@
 
 template <typename T>
 class HashSet {
-
-    std::vector<Node<T>> elements;
+    std::vector<DoublyList<T>> data;
     int n_elements;
+    int max_elements;
 
 public:
     HashSet();
     HashSet(const T arr[], int size);
-    HashSet(const std::array arr);
-    HashSet(const std::vector vec);
+    template <size_t N>
+    HashSet(const std::array<T, N> arr);
+    HashSet(const std::vector<T> vec);
     int hash(T item);
     void rehash();
     void add(T item);
     void remove(T item);
     bool contains(T item);
     bool issub(const T arr[], int size);
-    bool issub(const T std::array);
-    bool issub(const T std:vector);
+    template <size_t N>
+    bool issub(const std::array<T, N> arr);
+    bool issub(const std::vector<T> vec);
     bool empty();
     int size();
     void print();
