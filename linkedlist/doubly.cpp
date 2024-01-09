@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <array>
 #include "./node.hpp"
 #include "./doubly.hpp"
 
