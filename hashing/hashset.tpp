@@ -32,6 +32,11 @@ HashSet<T>::HashSet(const std::vector<T> vec):HashSet() {
 template <typename T>
 void HashSet<T>::add(T item) {
     int index = hash(item);
+    DoublyList<T> list = data[index];
+    if (list.contains(item)) {
+        return;
+    }
+    
 }
 
 template <typename T>
