@@ -1,5 +1,9 @@
 #ifndef SINGLY_LIST_HPP
 #define SINGLY_LIST_HPP
+
+#include <iostream>
+#include <array>
+#include <vector>
 #include "../utils/node.hpp"
 
 template <typename T>

@@ -1,5 +1,9 @@
 #ifndef DOUBLY_LIST_HPP
 #define DOUBLY_LIST_HPP
+
+#include <array>
+#include <iostream>
+#include <vector>
 #include "../utils/node.hpp"
 
 template <typename T>

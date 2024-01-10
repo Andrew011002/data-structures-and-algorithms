@@ -1,7 +1,3 @@
-#include <array>
-#include <iostream>
-#include <vector>
-
 template <typename T>
 SinglyList<T>::SinglyList() {
     list_size = 0;
