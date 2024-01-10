@@ -1,6 +1,6 @@
+#include <array>
 #include <iostream>
-#include "singly.hpp"
-#include "../utils/node.hpp"
+#include <vector>
 
 template <typename T>
 SinglyList<T>::SinglyList() {

@@ -24,4 +24,5 @@ public:
     void print();
 };
 
+#include "singly.tpp"
 #endif

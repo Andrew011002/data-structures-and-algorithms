@@ -36,4 +36,5 @@ public:
     void print();
 };
 
+#include "doubly.tpp"
 #endif
