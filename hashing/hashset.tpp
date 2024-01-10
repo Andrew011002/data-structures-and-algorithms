@@ -1,13 +1,9 @@
-#include "./hashset.hpp"
-#include <iostream>
-
 template <typename T>
 HashSet<T>::HashSet() {
     n_elements = 0;   
     max_elements = 7;
     for (int i=0; i < max_elements; i++) {
-        DoublyList<T> list = DoublyList<T>();
-        data.push_back(list);
+        data.push_back(DoublyList<T>());
     }
 }
 
@@ -54,7 +50,4 @@ int HashSet<T>::size() {
     return n_elements;
 }
 
-int main() {
-   HashSet<int> set; 
-}
 

@@ -32,4 +32,5 @@ public:
     void print();
 };
 
+#include "hashset.tpp"
 #endif
