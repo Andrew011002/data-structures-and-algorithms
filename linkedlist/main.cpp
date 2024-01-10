@@ -11,4 +11,8 @@ int main() {
     }
     singly.print();
 
+    DoublyList<int> doubly = DoublyList<int>(vec);
+    doubly.print();
+    std::cout << doubly.contains(3) << "\n";
+
 }
