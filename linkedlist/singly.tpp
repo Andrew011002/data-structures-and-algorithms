@@ -88,9 +88,6 @@ void SinglyList<T>::remove(T item) {
 
 template <typename T>
 bool SinglyList<T>::contains(T item) {
-    if (empty()) {
-        throw std::exception();
-    }
     Node<T>* node = head;
     while (node != nullptr) {
         if (node->val == item) {

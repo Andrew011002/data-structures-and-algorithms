@@ -122,9 +122,6 @@ void DoublyList<T>::write(T item, int index) {
 
 template <typename T>
 bool DoublyList<T>::contains(T item) {
-    if (empty()) {
-        throw std::exception();
-    }
     Node<T> *node = head;
     while (node) {
         if (node->val == item) {
