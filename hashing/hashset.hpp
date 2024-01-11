@@ -6,11 +6,12 @@
 #include "../utils/node.hpp"
 #include "../linkedlist/doubly.hpp"
 
+
 template <typename T>
 class HashSet {
-    std::vector<DoublyList<T>> data;
-    int n_elements;
-    int max_elements;
+    std::vector<DoublyList<T>*> data;
+    int set_size;
+    int set_capacity;
 
 public:
     HashSet();
@@ -29,6 +30,7 @@ public:
     bool issub(const std::vector<T> vec);
     bool empty();
     int size();
+    int capacity();
     void print();
 };
 

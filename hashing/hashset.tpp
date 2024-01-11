@@ -1,9 +1,11 @@
+int MAX_ELEMENTS = 5;
+
 template <typename T>
 HashSet<T>::HashSet() {
-    n_elements = 0;   
-    max_elements = 7;
-    for (int i=0; i < max_elements; i++) {
-        data.push_back(DoublyList<T>());
+    set_size = 0;
+    set_capacity = 5;
+    for (int i=0; i < set_capacity; i++) {
+        data.push_back(new DoublyList<T>());
     }
 }
 
@@ -30,29 +32,47 @@ HashSet<T>::HashSet(const std::vector<T> vec):HashSet() {
  }
 
 template <typename T>
-void HashSet<T>::add(T item) {
-    int index = hash(item);
-    DoublyList<T> list = data[index];
-    if (list.contains(item)) {
-        return;
-    }
-    
+int HashSet<T>::hash(T item) {
+    std::hash<T> func;
+    return func(item) % set_capacity;
 }
 
 template <typename T>
-int HashSet<T>::hash(T item) {
-    std::hash<T> func;
-    return func(item) % max_elements;
+void HashSet<T>::rehash() {
+
+}
+
+template <typename T>
+void HashSet<T>::add(T item) {
+    int index = hash(item);
+    DoublyList<T> *list = data[index];
+    list->add(item);
+    set_size++;
 }
 
 template <typename T>
 bool HashSet<T>::empty() {
-    return n_elements == 0;
+    return set_size == 0;
 }
 
 template <typename T>
 int HashSet<T>::size() {
-    return n_elements;
+    return set_size;
+}
+
+template <typename T>
+void HashSet<T>::print() {
+    std::cout << "{ ";
+    int index = 0;
+    
+    while (index < set_capacity) {
+        DoublyList<T> *list = data[index];
+        for (int i=0; i < list->size(); i++) {
+            std::cout << list->get(i) << " ";
+        }
+        index++; 
+    }
+    std::cout << "}\n";
 }
 
 
