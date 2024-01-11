@@ -34,7 +34,7 @@ HashSet<T>::HashSet(const std::vector<T> vec):HashSet() {
 template <typename T>
 int HashSet<T>::hash(T item) {
     std::hash<T> func;
-    return func(item) % set_capacity;
+    return func(item) % capacity();
 }
 
 template <typename T>
@@ -46,7 +46,7 @@ void HashSet<T>::rehash() {
     for (int i=0; i < set_capacity; i++) {
         data.push_back(new DoublyList<T>());
     }
-
+    // can this be faster than O(mn)?
     for (DoublyList<T> *list: data_copy) {
         for (int i=0; i < list->size(); i++) {
             add(list->get(i));
@@ -56,23 +56,34 @@ void HashSet<T>::rehash() {
 
 template <typename T>
 void HashSet<T>::add(T item) {
-    int index = hash(item);
-    while (true) {
-        DoublyList<T> *list = data[index];
-        if (list->contains(item)) {
-            return;
-        }
-        if (list->size() == MAX_ELEMENTS) {
-            index = (index + 1) % capacity();
-        } else {
-            list->add(item);
-            set_size++;
-            break;
-        }
+    if (contains(item)) {
+        return;
     }
+    int index = hash(item);
+    DoublyList<T> *list = data[index];
+    while (list->size() == MAX_ELEMENTS) {
+        index = (index + 1) % capacity();
+        list = data[index];
+    }
+    list->add(item);
+    set_size++;
     if (size() >= capacity() / 2) {
         rehash();
     }
+}
+
+template <typename T>
+bool HashSet<T>::contains(T item) {
+    int index = hash(item);
+    DoublyList<T> *list = data[index];
+    while (list->size() > 0) {
+        if (list->contains(item)) {
+            return true;
+        }
+        index = (index + 1) % capacity(); 
+        list = data[index]; 
+    }
+    return false;
 }
 
 template <typename T>
