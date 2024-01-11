@@ -3,7 +3,7 @@ int MAX_ELEMENTS = 5;
 template <typename T>
 HashSet<T>::HashSet() {
     set_size = 0;
-    set_capacity = 5;
+    set_capacity = 19;
     for (int i=0; i < set_capacity; i++) {
         data.push_back(new DoublyList<T>());
     }
@@ -39,15 +39,40 @@ int HashSet<T>::hash(T item) {
 
 template <typename T>
 void HashSet<T>::rehash() {
+    set_size = 0;
+    set_capacity = set_capacity * 2 + 1;
+    std::vector<DoublyList<T>*> data_copy = data; 
+    data.clear();
+    for (int i=0; i < set_capacity; i++) {
+        data.push_back(new DoublyList<T>());
+    }
 
+    for (DoublyList<T> *list: data_copy) {
+        for (int i=0; i < list->size(); i++) {
+            add(list->get(i));
+        }
+    }
 }
 
 template <typename T>
 void HashSet<T>::add(T item) {
     int index = hash(item);
-    DoublyList<T> *list = data[index];
-    list->add(item);
-    set_size++;
+    while (true) {
+        DoublyList<T> *list = data[index];
+        if (list->contains(item)) {
+            return;
+        }
+        if (list->size() == MAX_ELEMENTS) {
+            index = (index + 1) % capacity();
+        } else {
+            list->add(item);
+            set_size++;
+            break;
+        }
+    }
+    if (size() >= capacity() / 2) {
+        rehash();
+    }
 }
 
 template <typename T>
@@ -58,6 +83,11 @@ bool HashSet<T>::empty() {
 template <typename T>
 int HashSet<T>::size() {
     return set_size;
+}
+
+template <typename T>
+int HashSet<T>::capacity() {
+    return set_capacity;
 }
 
 template <typename T>
