@@ -73,6 +73,21 @@ void HashSet<T>::add(T item) {
 }
 
 template <typename T>
+void HashSet<T>::remove(T item) {
+    if (!contains(item)) {
+        throw std::exception();
+    }
+    int index = hash(item);
+    DoublyList<T> *list = data[index];
+    while (!list->contains(item)) {
+        index = (index + 1) % capacity();
+        list = data[index];
+    }
+    list->remove(item);
+    set_size--;
+}
+
+template <typename T>
 bool HashSet<T>::contains(T item) {
     int index = hash(item);
     DoublyList<T> *list = data[index];
