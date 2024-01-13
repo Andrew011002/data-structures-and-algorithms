@@ -5,11 +5,6 @@ int main() {
     for (int i=0; i < 10; i++) {
         set.add(i);
     }
-    set.print();
-    printf("contains: %d\n", set.contains(0));
-    set.remove(8);
-    set.print();
-    printf("size: %d\n", set.size());
-    set.add(9);
-    set.print();
+    int arr[5] = {0, 2, 4, 6, 8};
+    printf("Is subset? %d\n", set.issub(arr, 5));
 }
