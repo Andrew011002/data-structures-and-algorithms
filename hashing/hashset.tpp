@@ -102,6 +102,38 @@ bool HashSet<T>::contains(T item) {
 }
 
 template <typename T>
+bool HashSet<T>::issub(const T arr[], int size) {
+    for (int i=0; i < size; i++) {
+        if (!contains(arr[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <typename T>
+template <size_t N>
+bool HashSet<T>::issub(const std::array<T, N> arr) {
+    for (T item: arr) {
+        if (!contains(item)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+template <typename T>
+bool HashSet<T>::issub(const std::vector<T> vec) {
+    for (T item: vec) {
+        if (!contains(item)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <typename T>
 bool HashSet<T>::empty() {
     return set_size == 0;
 }
