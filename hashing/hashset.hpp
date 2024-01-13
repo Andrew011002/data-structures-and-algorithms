@@ -28,7 +28,7 @@ public:
     template <size_t N>
     bool issub(const std::array<T, N> arr);
     bool issub(const std::vector<T> vec);
-    HashSet<T> intersectof(const T arr[]);
+    HashSet<T> intersectof(const T arr[], int size);
     template <size_t N>
     HashSet<T> intersectof(const std::array<T, N> arr);
     HashSet<T> intersectof(const std::vector<T> vec);

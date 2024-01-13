@@ -134,6 +134,41 @@ bool HashSet<T>::issub(const std::vector<T> vec) {
 }
 
 template <typename T>
+HashSet<T> HashSet<T>::intersectof(const T arr[], int size) {
+    HashSet<T> set;
+    for (int i=0; i < size; i++) {
+        if (contains(arr[i])) {
+            set.add(arr[i]);
+        }
+    }
+    return set;
+}
+
+template <typename T>
+template <size_t N>
+HashSet<T> HashSet<T>::intersectof(const std::array<T, N> arr) {
+    HashSet<T> set;
+    for (T item:) {
+        if (contains(item)) {
+            set.add(item);
+        }
+    }
+    return set;
+}
+
+template <typename T>
+HashSet<T> HashSet<T>::intersectof(const std::vector<T> vec) {
+    HashSet<T> set;
+    for (T item: vec) {
+        if (contains(item)) {
+            set.add(item);
+        }
+    }
+    return set;
+}
+
+
+template <typename T>
 bool HashSet<T>::empty() {
     return set_size == 0;
 }
