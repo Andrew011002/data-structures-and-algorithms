@@ -148,7 +148,7 @@ template <typename T>
 template <size_t N>
 HashSet<T> HashSet<T>::intersectof(const std::array<T, N> arr) {
     HashSet<T> set;
-    for (T item:) {
+    for (T item: arr) {
         if (contains(item)) {
             set.add(item);
         }
