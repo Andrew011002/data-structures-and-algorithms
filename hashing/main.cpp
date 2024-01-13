@@ -6,6 +6,6 @@ int main() {
         set.add(i);
     }
 
-    std::array<int, 4> arr = {19, 20, 0, 8};
-    set.intersectof(arr).print();
+    int arr[] = {69, 4, 5, 19, 20, 490};
+    set.unionof(arr, 6).print();
 }

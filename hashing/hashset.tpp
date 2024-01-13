@@ -18,14 +18,14 @@ HashSet<T>::HashSet(const T arr[], int size):HashSet() {
 
 template <typename T>
 template <size_t N>
-HashSet<T>::HashSet(const std::array<T, N> arr):HashSet() {
+HashSet<T>::HashSet(const std::array<T, N> &arr):HashSet() {
     for (T item: arr) {
         add(item);
     }
 }
 
 template <typename T>
-HashSet<T>::HashSet(const std::vector<T> vec):HashSet() {
+HashSet<T>::HashSet(const std::vector<T> &vec):HashSet() {
     for (T item: vec) {
         add(item);
     }
@@ -113,7 +113,7 @@ bool HashSet<T>::issub(const T arr[], int size) {
 
 template <typename T>
 template <size_t N>
-bool HashSet<T>::issub(const std::array<T, N> arr) {
+bool HashSet<T>::issub(const std::array<T, N> &arr) {
     for (T item: arr) {
         if (!contains(item)) {
             return false;
@@ -124,7 +124,7 @@ bool HashSet<T>::issub(const std::array<T, N> arr) {
 
 
 template <typename T>
-bool HashSet<T>::issub(const std::vector<T> vec) {
+bool HashSet<T>::issub(const std::vector<T> &vec) {
     for (T item: vec) {
         if (!contains(item)) {
             return false;
@@ -146,7 +146,7 @@ HashSet<T> HashSet<T>::intersectof(const T arr[], int size) {
 
 template <typename T>
 template <size_t N>
-HashSet<T> HashSet<T>::intersectof(const std::array<T, N> arr) {
+HashSet<T> HashSet<T>::intersectof(const std::array<T, N> &arr) {
     HashSet<T> set;
     for (T item: arr) {
         if (contains(item)) {
@@ -157,7 +157,7 @@ HashSet<T> HashSet<T>::intersectof(const std::array<T, N> arr) {
 }
 
 template <typename T>
-HashSet<T> HashSet<T>::intersectof(const std::vector<T> vec) {
+HashSet<T> HashSet<T>::intersectof(const std::vector<T> &vec) {
     HashSet<T> set;
     for (T item: vec) {
         if (contains(item)) {
@@ -170,11 +170,9 @@ HashSet<T> HashSet<T>::intersectof(const std::vector<T> vec) {
 template <typename T>
 HashSet<T> HashSet<T>::unionof(const T arr[], int size) {
     HashSet<T> set;
-    DoublyList<T> list;
-    for (int i=0; i < set_capacity; i++) {
-        list = data[i];
-        for (int j=0; j < list.size(); j++) {
-            set.add(list.get(j));
+    for (DoublyList<T> *list: data) {
+        for (int j=0; j < list->size(); j++) {
+            set.add(list->get(j));
         } 
     }
     for (int i=0; i < size; i++) {
@@ -185,13 +183,12 @@ HashSet<T> HashSet<T>::unionof(const T arr[], int size) {
 
 template <typename T>
 template <size_t N>
-HashSet<T> HashSet<T>::unionof(const std::array<T, N> arr) {
+HashSet<T> HashSet<T>::unionof(const std::array<T, N> &arr) {
     HashSet<T> set;
-    DoublyList<T> list;
-    for (int i=0; i < set_capacity; i++) {
-        list = data[i];
-        for (int j=0; j < list.size(); j++) {
-            set.add(list.get(j));
+    DoublyList<T> *list;
+    for (DoublyList<T> *list: data) {
+        for (int j=0; j < list->size(); j++) {
+            set.add(list->get(j));
         } 
     }
     for (T item: arr) {
@@ -201,13 +198,12 @@ HashSet<T> HashSet<T>::unionof(const std::array<T, N> arr) {
 }
 
 template <typename T>
-HashSet<T> HashSet<T>::unionof(const std::vector<T> vec) {
+HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) {
     HashSet<T> set;
-    DoublyList<T> list;
-    for (int i=0; i < set_capacity; i++) {
-        list = data[i];
-        for (int j=0; j < list.size(); j++) {
-            set.add(list.get(j));
+    DoublyList<T> *list;
+    for (DoublyList<T> *list: data) {
+        for (int j=0; j < list->size(); j++) {
+            set.add(list->get(j));
         } 
     }
     for (T item: vec) {
