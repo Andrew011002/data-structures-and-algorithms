@@ -171,8 +171,8 @@ template <typename T>
 HashSet<T> HashSet<T>::unionof(const T arr[], int size) {
     HashSet<T> set;
     for (DoublyList<T> *list: data) {
-        for (int j=0; j < list->size(); j++) {
-            set.add(list->get(j));
+        for (int i=0; i < list->size(); i++) {
+            set.add(list->get(i));
         } 
     }
     for (int i=0; i < size; i++) {
@@ -187,8 +187,8 @@ HashSet<T> HashSet<T>::unionof(const std::array<T, N> &arr) {
     HashSet<T> set;
     DoublyList<T> *list;
     for (DoublyList<T> *list: data) {
-        for (int j=0; j < list->size(); j++) {
-            set.add(list->get(j));
+        for (int i=0; i < list->size(); i++) {
+            set.add(list->get(i));
         } 
     }
     for (T item: arr) {
@@ -202,8 +202,8 @@ HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) {
     HashSet<T> set;
     DoublyList<T> *list;
     for (DoublyList<T> *list: data) {
-        for (int j=0; j < list->size(); j++) {
-            set.add(list->get(j));
+        for (int i=0; i < list->size(); i++) {
+            set.add(list->get(i));
         } 
     }
     for (T item: vec) {
