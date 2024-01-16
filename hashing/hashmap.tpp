@@ -28,7 +28,7 @@ void HashMap<K, V>::rehash() {
     std::array<DoublyList<std::pair<K, std::optional<V>>>*, old_capacity> data_copy = data;
     data = std::array<DoublyList<std::pair<K, std::optional<V>>>, map_capacity>();
     for (int i=0; i < data_copy.size(); i++) {
-        DoublyList<std::pair<K, std::optional<V>>> *list = data[i];
+        DoublyList<std::pair<K, std::optional<V>>> *list = data_copy[i];
         for (int j=0; j < list->size(); j++) {
             std::pair<K, std::optional<V>> item = list[j];
             add(item.first, item.second);
@@ -38,7 +38,7 @@ void HashMap<K, V>::rehash() {
 
 template <typename K, typename V>
 void HashMap<K, V>::add(K key, V value) {
-    
+    // add contains here 
 
     std::pair<K, std::optional<V>> item = {key, value};
     int index = hash(key);
