@@ -1,10 +1,10 @@
 #ifndef HASHSET_HPP
 #define HASHSET_HPP 
 
-#include "vector"
-#include "array"
+#include <vector>
+#include <array>
+#include <iostream>
 #include "../linkedlist/doubly.hpp"
-
 
 template <typename T>
 class HashSet {
