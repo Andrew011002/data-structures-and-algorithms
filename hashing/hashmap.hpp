@@ -13,7 +13,7 @@ class HashMap {
 
 public:
     HashMap();
-    HashMap(const std::pair<K, V>[] arr);
+    HashMap(const std::pair<K, V> arr[]);
     template <size_t N>
     HashMap(const std::array<std::pair<K, V>, N> &arr);
     HashMap(const std::vector<std::pair<K, V>> &vec);
@@ -22,18 +22,9 @@ public:
     V get(K key);
     void remove(K key);
     bool contains(K key);
-    K[] keys();
-    template <size_t N> 
-    std::array<K, N> keys();
     std::vector<K> keys();
-    K[] values();
-    template <size_t N> 
-    std::array<K, N> values();
-    std::vector<K> values();
-    std::pair<K, V>[] items();
-    template <size_t N> 
-    std::array<std::pair<K, V>, N> values();
-    std::vector<std::pair<K, V>> values();
+    std::vector<V> values();
+    std::vector<std::pair<K, V>> items();
     bool empty();
     int size();
     int capacity();
