@@ -27,5 +27,8 @@ int main() {
     printf("Empty? %d\n", set3.empty());
     printf("Size: %d\n", set3.size());
     printf("Capacity: %d\n", set3.capacity());
+    
+    
+
     return 0;
 }

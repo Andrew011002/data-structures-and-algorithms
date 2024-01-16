@@ -3,23 +3,23 @@
 #include <vector>
 #include <array>
 #include <utility>
+#include <optional>
 #include "../linkedlist/doubly.hpp"
 
 template <typename K, typename V>
 class HashMap {
-    DoublyList<std::pair<K, V>> *data;
-    int map_size;
-    int map_capacity;
+    int map_size = 0;
+    int map_capacity = 19;
+    std::array<DoublyList<std::pair<K, std::optional<V>>>*, 19> data;
 
 public:
     HashMap();
-    HashMap(const std::pair<K, V> arr[]);
-    template <size_t N>
-    HashMap(const std::array<std::pair<K, V>, N> &arr);
     HashMap(const std::vector<std::pair<K, V>> &vec);
-    int hash();
+    int hash(K key);
     void rehash();
-    V get(K key);
+    void add(K key, V value);
+    void add(K key);
+    std::optional<V> get(K key);
     void remove(K key);
     bool contains(K key);
     std::vector<K> keys();
