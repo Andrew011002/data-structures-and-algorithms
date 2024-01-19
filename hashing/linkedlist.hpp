@@ -12,8 +12,8 @@ template <typename T>
 class HashSetList {
 private:
     int _size;
-    Node<T>* head;
-    Node<T>* tail;
+    HashSetNode<T>* head;
+    HashSetNode<T>* tail;
 
 public:
     HashSetList();
@@ -28,8 +28,8 @@ public:
 template <typename T, typename U>
 class HashMapList{
     int _size;
-    NodeKV<T, U>* head;
-    NodeKV<T, U>* tail;
+    HashMapNode<T, U>* head;
+    HashMapNode<T, U>* tail;
 
 public:
     HashMapList();
