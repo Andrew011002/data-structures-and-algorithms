@@ -1,26 +1,7 @@
-const int MAX_ELEMENTS = 5;
-
 template <typename T>
 HashSet<T>::HashSet() {
-    _size = 0;
-    _capacity = INITIAL_CAPACITY;
-    for (int i=0; i < _capacity; i++) {
-        lists[i] = new HashSet<T>();
-    }
-}
-
-template <typename T>
-HashSet<T>::HashSet(const T arr[], int size):HashSet() {
-    for (int i=0; i < size; i++) {
-        add(arr[i]);
-    }
-}
-
-template <typename T>
-template <size_t N>
-HashSet<T>::HashSet(const std::array<T, N> &arr):HashSet() {
-    for (T item: arr) {
-        add(item);
+    for (int i=0; i < set_capacity; i++) {
+        lists[i] = new HashSetList<T>();
     }
 }
 
@@ -32,23 +13,34 @@ HashSet<T>::HashSet(const std::vector<T> &vec):HashSet() {
  }
 
 template <typename T>
-int HashSet<T>::hash(T item) {
+int HashSet<T>::hash(T item) const {
     std::hash<T> function;
     return function(item) % capacity();
 }
 
 template <typename T>
 void HashSet<T>::rehash() {
-    const int previous_capacity = _capacity;
-    _capacity = _capacity * 2 + 1;
-    _size = 0;
-    std::array<HashSetList<T>*, previous_capacity> old_lists = lists; 
-    lists = std::array<HashSetList<T>*, _capacity>();
-    for (HashSetList<T> *list: old_lists) {
-        for (int i=0; i < list->size(); i++) {
-            add(list->get(i));
+    const int previous_set_capacity = set_capacity;
+    HashSetList<T>** old_lists = new HashSetList<T>*[previous_set_capacity];
+    for (int i = 0; i < previous_set_capacity; i++) {
+        old_lists[i] = lists[i];
+    }
+
+    set_size = 0;
+    set_capacity = set_capacity * 2 + 1;
+    const int new_set_capacity = set_capacity;
+    lists = new HashSetList<T>*[new_set_capacity];
+    for (int i=0; i < new_set_capacity; i++) {
+        lists[i] = new HashSetList<T>();
+    }
+
+    for (int i=0; i < previous_set_capacity; i++) {
+        HashSetList<T> *list = old_lists[i];
+        for (int j=0; j < list->size(); j++) {
+            add(list->get(j));
         }
     }
+    delete [] old_lists;
 }
 
 template <typename T>
@@ -56,11 +48,12 @@ void HashSet<T>::add(T item) {
     if (contains(item)) {
         return;
     }
+    
     int index = hash(item);
-    DoublyList<T> *list = data[index];
-    while (list->size() == MAX_ELEMENTS) {
+    HashSetList<T> *list = lists[index];
+    while (list->size() == max_list_size) {
         index = (index + 1) % capacity();
-        list = data[index];
+        list = lists[index];
     }
     list->add(item);
     set_size++;
@@ -75,53 +68,31 @@ void HashSet<T>::remove(T item) {
         throw std::exception();
     }
     int index = hash(item);
-    DoublyList<T> *list = data[index];
+    HashSetList<T> *list = lists[index];
     while (!list->contains(item)) {
         index = (index + 1) % capacity();
-        list = data[index];
+        list = lists[index];
     }
     list->remove(item);
     set_size--;
 }
 
 template <typename T>
-bool HashSet<T>::contains(T item) {
+bool HashSet<T>::contains(T item) const {
     int index = hash(item);
-    DoublyList<T> *list = data[index];
+    HashSetList<T> *list = lists[index];
     while (list->size() > 0) {
         if (list->contains(item)) {
             return true;
         }
         index = (index + 1) % capacity(); 
-        list = data[index]; 
+        list = lists[index]; 
     }
     return false;
 }
 
 template <typename T>
-bool HashSet<T>::issub(const T arr[], int size) {
-    for (int i=0; i < size; i++) {
-        if (!contains(arr[i])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-template <typename T>
-template <size_t N>
-bool HashSet<T>::issub(const std::array<T, N> &arr) {
-    for (T item: arr) {
-        if (!contains(item)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
-template <typename T>
-bool HashSet<T>::issub(const std::vector<T> &vec) {
+bool HashSet<T>::issub(const std::vector<T> &vec) const {
     for (T item: vec) {
         if (!contains(item)) {
             return false;
@@ -131,30 +102,7 @@ bool HashSet<T>::issub(const std::vector<T> &vec) {
 }
 
 template <typename T>
-HashSet<T> HashSet<T>::intersectof(const T arr[], int size) {
-    HashSet<T> set;
-    for (int i=0; i < size; i++) {
-        if (contains(arr[i])) {
-            set.add(arr[i]);
-        }
-    }
-    return set;
-}
-
-template <typename T>
-template <size_t N>
-HashSet<T> HashSet<T>::intersectof(const std::array<T, N> &arr) {
-    HashSet<T> set;
-    for (T item: arr) {
-        if (contains(item)) {
-            set.add(item);
-        }
-    }
-    return set;
-}
-
-template <typename T>
-HashSet<T> HashSet<T>::intersectof(const std::vector<T> &vec) {
+HashSet<T> HashSet<T>::intersectof(const std::vector<T> &vec) const {
     HashSet<T> set;
     for (T item: vec) {
         if (contains(item)) {
@@ -165,40 +113,9 @@ HashSet<T> HashSet<T>::intersectof(const std::vector<T> &vec) {
 }
 
 template <typename T>
-HashSet<T> HashSet<T>::unionof(const T arr[], int size) {
+HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) const {
     HashSet<T> set;
-    for (DoublyList<T> *list: data) {
-        for (int i=0; i < list->size(); i++) {
-            set.add(list->get(i));
-        } 
-    }
-    for (int i=0; i < size; i++) {
-        set.add(arr[i]);
-    }
-    return set;
-}
-
-template <typename T>
-template <size_t N>
-HashSet<T> HashSet<T>::unionof(const std::array<T, N> &arr) {
-    HashSet<T> set;
-    DoublyList<T> *list;
-    for (DoublyList<T> *list: data) {
-        for (int i=0; i < list->size(); i++) {
-            set.add(list->get(i));
-        } 
-    }
-    for (T item: arr) {
-        set.add(item);
-    }
-    return set;
-}
-
-template <typename T>
-HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) {
-    HashSet<T> set;
-    DoublyList<T> *list;
-    for (DoublyList<T> *list: data) {
+    for (HashSetList<T> *list: lists) {
         for (int i=0; i < list->size(); i++) {
             set.add(list->get(i));
         } 
@@ -210,27 +127,27 @@ HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) {
 }
 
 template <typename T>
-bool HashSet<T>::empty() {
+bool HashSet<T>::empty() const {
     return set_size == 0;
 }
 
 template <typename T>
-int HashSet<T>::size() {
+int HashSet<T>::size() const {
     return set_size;
 }
 
 template <typename T>
-int HashSet<T>::capacity() {
+int HashSet<T>::capacity() const {
     return set_capacity;
 }
 
 template <typename T>
-void HashSet<T>::print() {
+void HashSet<T>::print() const {
     std::cout << "{ ";
     int index = 0;
     
     while (index < set_capacity) {
-        DoublyList<T> *list = data[index];
+        HashSetList<T> *list = lists[index];
         for (int i=0; i < list->size(); i++) {
             std::cout << list->get(i) << " ";
         }
