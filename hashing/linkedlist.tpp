@@ -67,23 +67,6 @@ bool HashSetList<T>::contains(T item) const {
 }
 
 template <typename T>
-int HashSetList<T>::indexof(T item) const {
-    if (empty()) {
-        throw std::exception();
-    }
-    int index = 0;
-    Node<T> *node = head;
-    while (node != nullptr) {
-        if (node->get() == item) {
-            return index;
-        }
-        node = node->next;
-        index++;
-    }
-    return -1;
-}
-
-template <typename T>
 int HashSetList<T>::size() const {
     return _size;
 }

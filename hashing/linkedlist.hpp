@@ -16,36 +16,32 @@ private:
     Node<T>* tail;
 
 public:
-
     HashSetList();
-    HashSetList (const std::vector<T> &vec);
     void add(T item);
     void remove(T item);
     bool contains(T item) const;
-    int indexof(T item) const;
     int size() const;
     bool empty() const;
     void print() const;
 };
 
 template <typename T, typename U>
-class LinkedListKV{
+class HashMapList{
     int _size;
     NodeKV<T, U>* head;
     NodeKV<T, U>* tail;
 
 public:
-    LinkedListKV();
-    std::pair<T, U> get(int index);
-    void add(T item, U data);
-    void insert(T item, U data, int index);
-    void remove(T item);
-    bool contains(T item);
-    int indexof(T item);
-    void overwrite(T item, int index);
-    int size();
-    bool empty();
-    void print();
+    HashMapList();
+    U get(T key) const;
+    void add(T key);
+    void add(T key, U value);
+    void remove(T key);
+    bool contains(T key) const;
+    bool containsval(U value) const;
+    int size() const;
+    bool empty() const;
+    void print() const;
 };
 
 #include "linkedlist.tpp"
