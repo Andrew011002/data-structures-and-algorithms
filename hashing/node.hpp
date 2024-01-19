@@ -29,9 +29,10 @@ class NodeKV {
 private:
     T _key;
     U _value;
-    NodeKV<T, U>* next;
 
 public:
+    NodeKV<T, U>* next;
+
     NodeKV(T item, U data) {
         _key = item;
         _value = data;
@@ -46,15 +47,15 @@ public:
         return _key;
     }
     
-    void set(T item) {
+    void setkey(T item) {
         _key = item;
     }
 
-    void set(U data) {
+    void setval(U data) {
         _value = data;
     }
 
-    void set(T item, U data) {
+    void setall(T item, U data) {
         _key = item;
         _value = data;
     }

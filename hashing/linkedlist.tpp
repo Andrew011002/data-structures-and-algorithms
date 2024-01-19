@@ -1,25 +1,12 @@
 template <typename T>
-LinkedList<T>::LinkedList() {
+HashSetList<T>::HashSetList() {
     _size = 0;
     head = nullptr;
     tail = nullptr;
 }
 
 template <typename T>
-T LinkedList<T>::get(int index) const {
-    if (empty()|| index >= size() || index < 0) {
-        throw std::exception();
-    }
-    Node<T> *node = head;
-    while (index > 0) {
-        node = node->next;
-        index--;
-    }
-    return node->get();
-}
-
-template <typename T>
-void LinkedList<T>::add(T item) {
+void HashSetList<T>::add(T item) {
     Node<T> *node = new Node<T>(item);
     if (size() == 0) {
         head = node;
@@ -32,33 +19,7 @@ void LinkedList<T>::add(T item) {
 }
 
 template <typename T>
-void LinkedList<T>::insert(T item, int index) {
-    if (index > size()) {
-        throw std::exception();
-    }
-    if (index == size()) {
-        add(item);
-        return;
-    }
-    if (index == 0) {
-        Node<T> *next_node = head;
-        head = new Node<T>(item);
-        head->next = next_node;
-    } else {
-        Node<T> *node = head;
-        while (index - 1 > 0) {
-            node = node->next;
-            index--;
-        }
-        Node<T> *next_node = node->next;
-        node->next = new Node<T>(item);
-        node->next->next = next_node;
-    }
-    _size++;
-}
-
-template <typename T>
-void LinkedList<T>::remove(T item) {
+void HashSetList<T>::remove(T item) {
     if (empty()) {
         throw std::exception();
     }
@@ -94,7 +55,7 @@ void LinkedList<T>::remove(T item) {
 }
 
 template <typename T>
-bool LinkedList<T>::contains(T item) const {
+bool HashSetList<T>::contains(T item) const {
     Node<T> *node = head;
     while (node != nullptr) {
         if (node->get() == item) {
@@ -106,7 +67,7 @@ bool LinkedList<T>::contains(T item) const {
 }
 
 template <typename T>
-int LinkedList<T>::indexof(T item) const {
+int HashSetList<T>::indexof(T item) const {
     if (empty()) {
         throw std::exception();
     }
@@ -123,30 +84,17 @@ int LinkedList<T>::indexof(T item) const {
 }
 
 template <typename T>
-void LinkedList<T>::overwrite(T item, int index) {
-    if (empty() || index < 0 || index >= size()) {
-        throw std::exception();
-    }
-    Node<T> *node = head;
-    while (index > 0) {
-        node = node->next;
-        index++;
-    }
-    node->set(item);
-}
-
-template <typename T>
-int LinkedList<T>::size() const {
+int HashSetList<T>::size() const {
     return _size;
 }
 
 template <typename T>
-bool LinkedList<T>::empty() const {
+bool HashSetList<T>::empty() const {
     return _size == 0;
 }
 
 template <typename T>
-void LinkedList<T>::print() const {
+void HashSetList<T>::print() const {
     std::cout << "[ ";
     Node<T> *node = head;
     while (node != nullptr) {

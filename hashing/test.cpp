@@ -4,13 +4,14 @@
 
 int main() {
 
-    LinkedList<int> list = LinkedList<int>();
-    for (int i=0; i < 10; i++) {
-        list.add(i);
+    std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    HashSetList<int> list = HashSetList<int>();
+    for (int item: vec) {
+        list.add(item);
     }
-    list.overwrite(69, 0);
-    list.insert(69, 10);
     list.remove(5);
     list.print();
+    std::cout << list.contains(5) << "\n";
+    std::cout << list.contains(1) << "\n";
     return 0;
 }
