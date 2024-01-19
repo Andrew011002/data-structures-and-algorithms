@@ -4,27 +4,39 @@
 template <typename T>
 class Node {
 public:
-    T value;
+    T _value;
     Node<T>* next;
 
-    Node(T val) {
-        value = val;
+    Node(T value) {
+        _value = value;
         next = nullptr;
     }
+
+    T get() const {
+        return _value
+    } 
     
 };
 
 template <typename T, typename U>
 class NodeKV {
 public:
-    T key;
-    U value;
+    T _key;
+    U _value;
     NodeKV<T, U>* next;
 
-    NodeKV(T key, U val) {
-        key = key;
-        value = val;
+    NodeKV(T item, U data) {
+        _key = item;
+        _value = data;
         next = nullptr;
+    }
+    
+    U get() const {
+        return _value;
+    }
+    
+    T key() const {
+        return _key;
     }
 };
 
