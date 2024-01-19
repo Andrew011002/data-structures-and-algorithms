@@ -1,16 +1,16 @@
 template <typename T>
-HashSetList<T>::HashSetList() {
+LinkedList<T>::LinkedList() {
     _size = 0;
     head = nullptr;
     tail = nullptr;
 }
 
 template <typename T>
-T HashSetList<T>::get(int index) const {
+T LinkedList<T>::get(int index) const {
     if (empty()|| index >= size() || index < 0) {
         throw std::exception();
     }
-    HashSetNode<T>* node = head;
+    Node<T>* node = head;
     while (index > 0) {
         node = node->next;
         index--;
@@ -19,8 +19,8 @@ T HashSetList<T>::get(int index) const {
 }
 
 template <typename T>
-void HashSetList<T>::add(T item) {
-    HashSetNode<T> *node = new HashSetNode<T>(item);
+void LinkedList<T>::add(T item) {
+    Node<T> *node = new Node<T>(item);
     if (size() == 0) {
         head = node;
         tail = head;
@@ -32,13 +32,13 @@ void HashSetList<T>::add(T item) {
 }
 
 template <typename T>
-void HashSetList<T>::remove(T item) {
+void LinkedList<T>::remove(T item) {
     if (empty()) {
         throw std::exception();
     }
 
-    HashSetNode<T> *previous_node = nullptr;
-    HashSetNode<T> *node = head;
+    Node<T> *previous_node = nullptr;
+    Node<T> *node = head;
     bool not_found = true;
     while (node != nullptr) {
         if (node->get() == item) {
@@ -57,7 +57,7 @@ void HashSetList<T>::remove(T item) {
         head = nullptr;
         tail = nullptr;
     } else if (node == head) {
-        HashSetNode<T> *next_node = head->next;
+        Node<T> *next_node = head->next;
         delete head;
         head = next_node;
     } else {
@@ -68,8 +68,8 @@ void HashSetList<T>::remove(T item) {
 }
 
 template <typename T>
-bool HashSetList<T>::contains(T item) const {
-    HashSetNode<T> *node = head;
+bool LinkedList<T>::contains(T item) const {
+    Node<T> *node = head;
     while (node != nullptr) {
         if (node->get() == item) {
             return true;
@@ -80,19 +80,19 @@ bool HashSetList<T>::contains(T item) const {
 }
 
 template <typename T>
-int HashSetList<T>::size() const {
+int LinkedList<T>::size() const {
     return _size;
 }
 
 template <typename T>
-bool HashSetList<T>::empty() const {
+bool LinkedList<T>::empty() const {
     return _size == 0;
 }
 
 template <typename T>
-void HashSetList<T>::print() const {
+void LinkedList<T>::print() const {
     std::cout << "[ ";
-    HashSetNode<T> *node = head;
+    Node<T> *node = head;
     while (node != nullptr) {
         std::cout << node->get() << " ";
         node = node->next;
