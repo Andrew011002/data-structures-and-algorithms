@@ -3,17 +3,18 @@
 
 template <typename T>
 class Node {
-public:
+private:
     T _value;
     Node<T>* next;
 
+public:
     Node(T value) {
         _value = value;
         next = nullptr;
     }
 
     T get() const {
-        return _value
+        return _value;
     }
 
     void set(T value) {
@@ -24,11 +25,12 @@ public:
 
 template <typename T, typename U>
 class NodeKV {
-public:
+private:
     T _key;
     U _value;
     NodeKV<T, U>* next;
 
+public:
     NodeKV(T item, U data) {
         _key = item;
         _value = data;

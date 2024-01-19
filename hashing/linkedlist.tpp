@@ -1,25 +1,25 @@
 template <typename T>
-SinglyList<T>::SinglyList() {
-    list_size = 0;
+LinkedList<T>::LinkedList() {
+    _size = 0;
     head = nullptr;
     tail = nullptr;
 }
 
 template <typename T>
-T SinglyList<T>::get(int index) {
+T LinkedList<T>::get(int index) {
     if (empty()|| index >= size() || index < 0) {
         throw std::exception();
     }
     Node<T>* node = head;
-    for (int i=0; i < index; i++) {
+    while (index > 0) {
         node = node->next;
     }
-    return node->val;
+    return node->get();
 }
 
 template <typename T>
-void SinglyList<T>::add(T item) {
-    Node<T>* node = new Node<int>(item);
+void LinkedList<T>::add(T item) {
+    Node<T>* node = new Node<T>(item);
     if (head == nullptr) {
         head = node;
         tail = head;
@@ -27,11 +27,11 @@ void SinglyList<T>::add(T item) {
         tail->next = node;
         tail = tail->next;
     }
-    list_size++;
+    _size++;
 }
 
 template <typename T>
-void SinglyList<T>::insert(T item, int index) {
+void LinkedList<T>::insert(T item, int index) {
     if (index > size()) {
         throw std::exception();
     }
@@ -56,7 +56,7 @@ void SinglyList<T>::insert(T item, int index) {
 }
 
 template <typename T>
-void SinglyList<T>::remove(T item) {
+void LinkedList<T>::remove(T item) {
     bool not_found = true;
     Node<T>* previous_node = nullptr;
     Node<T>* node = head;
@@ -87,7 +87,7 @@ void SinglyList<T>::remove(T item) {
 }
 
 template <typename T>
-bool SinglyList<T>::contains(T item) {
+bool LinkedList<T>::contains(T item) {
     Node<T>* node = head;
     while (node != nullptr) {
         if (node->val == item) {
@@ -99,7 +99,7 @@ bool SinglyList<T>::contains(T item) {
 }
 
 template <typename T>
-int SinglyList<T>::indexof(T item) {
+int LinkedList<T>::indexof(T item) {
     if (empty()) {
         throw std::exception();
     }
@@ -117,7 +117,7 @@ int SinglyList<T>::indexof(T item) {
 }
 
 template <typename T>
-void SinglyList<T>::overwrite(T item, int index) {
+void LinkedList<T>::overwrite(T item, int index) {
     if (empty() || index < 0 || index >= size()) {
         throw std::exception();
     }
@@ -129,17 +129,17 @@ void SinglyList<T>::overwrite(T item, int index) {
 }
 
 template <typename T>
-int SinglyList<T>::size() {
+int LinkedList<T>::size() {
     return list_size;
 }
 
 template <typename T>
-bool SinglyList<T>::empty() {
+bool LinkedList<T>::empty() {
     return list_size == 0;
 }
 
 template <typename T>
-void SinglyList<T>::print() {
+void LinkedList<T>::print() {
     std::cout << "[ ";
     Node<T>* node = head;
     while (node != nullptr) {
