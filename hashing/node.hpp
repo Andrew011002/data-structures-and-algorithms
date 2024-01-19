@@ -14,6 +14,10 @@ public:
 
     T get() const {
         return _value
+    }
+
+    void set(T value) {
+        _value = value;
     } 
     
 };
@@ -37,6 +41,19 @@ public:
     
     T key() const {
         return _key;
+    }
+    
+    void set(T item) {
+        _key = item;
+    }
+
+    void set(U data) {
+        _value = data;
+    }
+
+    void set(T item, U data) {
+        _key = item;
+        _value = data;
     }
 };
 
