@@ -2,14 +2,14 @@
 #define NODE_HPP
 
 template <typename T>
-class HashSetNode {
+class Node {
 private:
     T _value;
 
 public:
-    HashSetNode<T> *next;
+    Node<T> *next;
 
-    HashSetNode(T value) {
+    Node(T value) {
         _value = value;
         next = nullptr;
     }
@@ -25,15 +25,15 @@ public:
 };
 
 template <typename T, typename U>
-class HashMapNode {
+class NodeKV {
 private:
     T _key;
     U _value;
 
 public:
-    HashMapNode<T, U>* next;
+    NodeKV<T, U>* next;
 
-    HashMapNode(T item, U data) {
+    NodeKV(T item, U data) {
         _key = item;
         _value = data;
         next = nullptr;

@@ -14,7 +14,7 @@ private:
     int set_size = 0;
     int set_capacity = INITIAL_CAPACITY;
     const int max_list_size = MAX_LIST_SIZE;
-    HashSetList<T>** lists = new HashSetList<T>*[INITIAL_CAPACITY];
+    LinkedList<T>** lists = new LinkedList<T>*[INITIAL_CAPACITY];
 
 public:
     HashSet();

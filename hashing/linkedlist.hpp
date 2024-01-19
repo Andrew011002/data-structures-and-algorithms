@@ -9,14 +9,14 @@
 #include "node.hpp"
 
 template <typename T>
-class HashSetList {
+class LinkedList {
 private:
     int _size;
-    HashSetNode<T>* head;
-    HashSetNode<T>* tail;
+    Node<T>* head;
+    Node<T>* tail;
 
 public:
-    HashSetList();
+    LinkedList();
     T get(int index) const;
     void add(T item);
     void remove(T item);
@@ -27,13 +27,13 @@ public:
 };
 
 template <typename T, typename U>
-class HashMapList{
+class LinkedListKV{
     int _size;
-    HashMapNode<T, U>* head;
-    HashMapNode<T, U>* tail;
+    NodeKV<T, U>* head;
+    NodeKV<T, U>* tail;
 
 public:
-    HashMapList();
+    LinkedListKV();
     U get(T key) const;
     void add(T key);
     void add(T key, U value);
