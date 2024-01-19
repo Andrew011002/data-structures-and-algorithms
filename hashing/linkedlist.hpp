@@ -5,6 +5,7 @@
 #include <array>
 #include <vector>
 #include <utility>
+#include <stdexcept>
 #include "node.hpp"
 
 template <typename T>

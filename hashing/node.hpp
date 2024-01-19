@@ -5,13 +5,15 @@ template <typename T>
 class Node {
 private:
     T _value;
-    Node<T>* next;
 
 public:
+    Node<T> *next;
+
     Node(T value) {
         _value = value;
         next = nullptr;
     }
+
 
     T get() const {
         return _value;
@@ -20,7 +22,6 @@ public:
     void set(T value) {
         _value = value;
     } 
-    
 };
 
 template <typename T, typename U>
