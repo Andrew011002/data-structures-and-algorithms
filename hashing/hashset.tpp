@@ -115,9 +115,10 @@ HashSet<T> HashSet<T>::intersectof(const std::vector<T> &vec) const {
 template <typename T>
 HashSet<T> HashSet<T>::unionof(const std::vector<T> &vec) const {
     HashSet<T> set;
-    for (HashSetList<T> *list: lists) {
-        for (int i=0; i < list->size(); i++) {
-            set.add(list->get(i));
+    for (int i=0; i < set_capacity; i++) {
+        HashSetList<T> *list = lists[i];
+        for (int j=0; j < list->size(); j++) {
+            set.add(list->get(j));
         } 
     }
     for (T item: vec) {
