@@ -4,13 +4,15 @@
 #include <vector>
 #include <array>
 #include <iostream>
-#include "../linkedlist/doubly.hpp"
+#include "linkedlist.hpp"
+
+const int INITIAL_CAPACITY = 19;
 
 template <typename T>
 class HashSet {
-    std::vector<DoublyList<T>*> data;
-    int set_size;
-    int set_capacity;
+    std::array<HashSetList<T>*, INITIAL_CAPACITY> lists;
+    int _size;
+    int _capacity;
 
 public:
     HashSet();

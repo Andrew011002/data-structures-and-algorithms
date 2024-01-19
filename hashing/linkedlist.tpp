@@ -6,6 +6,19 @@ HashSetList<T>::HashSetList() {
 }
 
 template <typename T>
+T HashSetList<T>::get(int index) const {
+    if (empty()|| index >= size() || index < 0) {
+        throw std::exception();
+    }
+    HashSetNode<T>* node = head;
+    while (index > 0) {
+        node = node->next;
+        index--;
+    }
+    return node->get();
+}
+
+template <typename T>
 void HashSetList<T>::add(T item) {
     HashSetNode<T> *node = new HashSetNode<T>(item);
     if (size() == 0) {

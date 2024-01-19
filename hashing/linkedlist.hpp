@@ -17,6 +17,7 @@ private:
 
 public:
     HashSetList();
+    T get(int index) const;
     void add(T item);
     void remove(T item);
     bool contains(T item) const;

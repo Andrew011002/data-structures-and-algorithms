@@ -1,11 +1,11 @@
-int MAX_ELEMENTS = 5;
+const int MAX_ELEMENTS = 5;
 
 template <typename T>
 HashSet<T>::HashSet() {
-    set_size = 0;
-    set_capacity = 19;
-    for (int i=0; i < set_capacity; i++) {
-        data.push_back(new DoublyList<T>());
+    _size = 0;
+    _capacity = INITIAL_CAPACITY;
+    for (int i=0; i < _capacity; i++) {
+        lists[i] = new HashSet<T>();
     }
 }
 
@@ -33,21 +33,18 @@ HashSet<T>::HashSet(const std::vector<T> &vec):HashSet() {
 
 template <typename T>
 int HashSet<T>::hash(T item) {
-    std::hash<T> func;
-    return func(item) % capacity();
+    std::hash<T> function;
+    return function(item) % capacity();
 }
 
 template <typename T>
 void HashSet<T>::rehash() {
-    set_size = 0;
-    set_capacity = set_capacity * 2 + 1;
-    std::vector<DoublyList<T>*> data_copy = data; 
-    data.clear();
-    for (int i=0; i < set_capacity; i++) {
-        data.push_back(new DoublyList<T>());
-    }
-    // can this be faster than O(mn)?
-    for (DoublyList<T> *list: data_copy) {
+    const int previous_capacity = _capacity;
+    _capacity = _capacity * 2 + 1;
+    _size = 0;
+    std::array<HashSetList<T>*, previous_capacity> old_lists = lists; 
+    lists = std::array<HashSetList<T>*, _capacity>();
+    for (HashSetList<T> *list: old_lists) {
         for (int i=0; i < list->size(); i++) {
             add(list->get(i));
         }
