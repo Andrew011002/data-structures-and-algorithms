@@ -11,7 +11,7 @@
 template <typename T>
 class LinkedList {
 private:
-    int _size;
+    int list_size;
     Node<T>* head;
     Node<T>* tail;
 
@@ -28,18 +28,16 @@ public:
 
 template <typename T, typename U>
 class LinkedListKV{
-    int _size;
+    int list_size;
     NodeKV<T, U>* head;
     NodeKV<T, U>* tail;
 
 public:
     LinkedListKV();
-    U get(T key) const;
-    void add(T key);
+    std::pair<T, U> get(int index) const;
     void add(T key, U value);
     void remove(T key);
     bool contains(T key) const;
-    bool containsval(U value) const;
     int size() const;
     bool empty() const;
     void print() const;

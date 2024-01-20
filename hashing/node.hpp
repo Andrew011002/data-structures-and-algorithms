@@ -39,14 +39,14 @@ public:
         next = nullptr;
     }
     
-    U get() const {
-        return _value;
-    }
-    
     T key() const {
         return _key;
     }
     
+    U value() const {
+        return _value;
+    }
+
     void setkey(T item) {
         _key = item;
     }
