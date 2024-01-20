@@ -182,6 +182,18 @@ bool LinkedListKV<T, U>::contains(T key) const {
 }
 
 template <typename T, typename U>
+void LinkedListKV<T, U>::replace(T key, U value) {
+    if (!contains(key)) {
+        throw std::exception();
+    }
+    NodeKV<T, U> *node = head;
+    while (node->key() != key) {
+        node = node->next;
+    }
+    node->setval(value);
+}
+
+template <typename T, typename U>
 int LinkedListKV<T, U>::size() const {
     return list_size;
 }

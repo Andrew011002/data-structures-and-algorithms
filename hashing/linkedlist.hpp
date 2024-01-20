@@ -38,6 +38,7 @@ public:
     void add(T key, U value);
     void remove(T key);
     bool contains(T key) const;
+    void replace(T key, U value);
     int size() const;
     bool empty() const;
     void print() const;

@@ -16,5 +16,7 @@ int main() {
     std::cout << "empty? " << list.empty() << std::endl;
     std::cout << "contains? " << list.contains("Andrew") << std::endl;
     std::cout << "contains? " << list.contains("John") << std::endl;
+    list.replace("Andrew", 153);
+    list.print();
     return 0;
 }
