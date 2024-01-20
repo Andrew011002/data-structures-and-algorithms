@@ -4,33 +4,38 @@
 #include <array>
 #include <utility>
 #include <optional>
-#include "../linkedlist/doubly.hpp"
+#include "linkedlist.hpp"
 
-template <typename K, typename V>
+const int MAX_LIST_SIZE = 10;
+const int INITIAL_CAPACITY = 19;
+
+template <typename T, typename U>
 class HashMap {
     int map_size = 0;
     int map_capacity = 19;
-    std::array<DoublyList<std::pair<K, std::optional<V>>>*, 19> data;
+    const int max_list_size = MAX_LIST_SIZE;
+    LinkedListKV<T, std::optional<U>>** lists = new LinkedListKV<T, std::optional<U>>*[INITIAL_CAPACITY];
 
 public:
     HashMap();
-    HashMap(const std::vector<std::pair<K, V>> &vec);
-    int hash(K key);
+    HashMap(const std::vector<T> &vec);
+    HashMap(const std::vector<std::pair<T, U>> &vec);
+    int hash(T key) const;
     void rehash();
-    void add(K key, V value);
-    void add(K key);
-    std::optional<V> get(K key);
-    void remove(K key);
-    bool contains(K key);
-    std::vector<K> keys();
-    std::vector<V> values();
-    std::vector<std::pair<K, V>> items();
-    bool empty();
-    int size();
-    int capacity();
-    void print();
+    void add(T key, U value);
+    void add(T key);
+    std::optional<U> get(T key) const;
+    void remove(T key);
+    bool contains(T key) const;
+    void replace(T key, U value);
+    std::vector<T> keys() const;
+    std::vector<U> values() const;
+    std::vector<std::pair<T, U>> items() const;
+    bool empty() const;
+    int size() const;
+    int capacity() const;
+    void print() const;
 };
 
 #include "hashmap.tpp"
-
 #endif

@@ -108,11 +108,11 @@ LinkedListKV<T, U>::LinkedListKV() {
 }
 
 template <typename T, typename U>
-std::pair<T, U> LinkedListKV<T, U>::get(int index) const {
+std::pair<T, std::optional<U>> LinkedListKV<T, U>::get(int index) const {
     if (empty()|| index >= size() || index < 0) {
         throw std::exception();
     }
-    NodeKV<T, U>* node = head;
+    NodeKV<T, std::optional<U>>* node = head;
     while (index > 0) {
         node = node->next;
         index--;
@@ -121,8 +121,21 @@ std::pair<T, U> LinkedListKV<T, U>::get(int index) const {
 }
 
 template <typename T, typename U>
-void LinkedListKV<T, U>::add(T item, U data) {
-    NodeKV<T, U> *node = new NodeKV<T, U>(item, data);
+void LinkedListKV<T, U>::add(T key, U value) {
+    NodeKV<T, std::optional<U>> *node = new NodeKV<T, std::optional<U>>(key, std::optional<U>(value));
+    if (size() == 0) {
+        head = node;
+        tail = head;
+    }  else {
+        tail->next = node;
+        tail = tail->next;
+    }
+    list_size++;
+}
+
+template <typename T, typename U>
+void LinkedListKV<T, U>::add(T key) {
+    NodeKV<T, std::optional<U>> *node = new NodeKV<T, std::optional<U>>(key, std::optional<U>(std::nullopt));
     if (size() == 0) {
         head = node;
         tail = head;
@@ -139,8 +152,8 @@ void LinkedListKV<T, U>::remove(T key) {
         throw std::exception();
     }
 
-    NodeKV<T, U> *previous_node = nullptr;
-    NodeKV<T, U> *node = head;
+    NodeKV<T, std::optional<U>> *previous_node = nullptr;
+    NodeKV<T, std::optional<U>> *node = head;
     bool not_found = true;
     while (node != nullptr) {
         if (node->key() == key) {
@@ -159,7 +172,7 @@ void LinkedListKV<T, U>::remove(T key) {
         head = nullptr;
         tail = nullptr;
     } else if (node == head) {
-        NodeKV<T, U> *next_node = head->next;
+        NodeKV<T, std::optional<U>> *next_node = head->next;
         delete head;
         head = next_node;
     } else {
@@ -171,7 +184,7 @@ void LinkedListKV<T, U>::remove(T key) {
 
 template <typename T, typename U>
 bool LinkedListKV<T, U>::contains(T key) const {
-    NodeKV<T, U> *node = head;
+    NodeKV<T, std::optional<U>> *node = head;
     while (node != nullptr) {
         if (node->key() == key) {
             return true;
@@ -183,14 +196,14 @@ bool LinkedListKV<T, U>::contains(T key) const {
 
 template <typename T, typename U>
 void LinkedListKV<T, U>::replace(T key, U value) {
-    if (!contains(key)) {
-        throw std::exception();
-    }
-    NodeKV<T, U> *node = head;
-    while (node->key() != key) {
+    NodeKV<T, std::optional<U>> *node = head;
+    while (node != nullptr) {
+        if (node->key() == key) {
+            node->setval(std::optional<U>(value));
+            return;
+        }
         node = node->next;
     }
-    node->setval(value);
 }
 
 template <typename T, typename U>
@@ -206,9 +219,15 @@ bool LinkedListKV<T, U>::empty() const {
 template <typename T, typename U>
 void LinkedListKV<T, U>::print() const {
     std::cout << "[ ";
-    NodeKV<T, U> *node = head;
+    NodeKV<T, std::optional<U>> *node = head;
     while (node != nullptr) {
-        std::cout << "(" << node->key() << ": " << node->value() << ") ";
+        std::cout << node->key() << ": ";
+        if (node->value().has_value()) {
+            std::cout << node->value().value();
+        } else {
+            std::cout << "null";
+        }
+        std::cout << " ";
         node = node->next;
     }
     std::cout << "]\n";

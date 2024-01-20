@@ -1,73 +1,158 @@
-int MAX_CAPACITY = 10;
-
-template <typename K, typename V>
-HashMap<K, V>::HashMap() {
+template <typename T, typename U>
+HashMap<T, U>::HashMap() {
     for (int i=0; i < map_capacity; i++) {
-        data[i] = new DoublyList<std::pair<K, std::optional<V>>>();
+        lists[i] = new LinkedListKV<T, std::optional<U>>();
     }
 }
 
-template <typename K, typename V>
-HashMap<K, V>::HashMap(const std::vector<std::pair<K, V>> &vec):HashMap() {
-    for (std::pair<K, V> &item: vec) {
+template <typename T, typename U>
+HashMap<T, U>::HashMap(const std::vector<std::pair<T, U>> &vec):HashMap() {
+    for (std::pair<T, U> &item: vec) {
         add(item.first, item.second);
     }
 }
 
-template <typename K, typename V>
-int HashMap<K, V>::hash(K key) {
-   std::hash<K> f; 
-   return f(key) % map_capacity;
+template <typename T, typename U>
+int HashMap<T, U>::hash(T key) const {
+   std::hash<T> function; 
+   return function(key) % map_capacity;
 }
 
-template <typename K, typename V>
-void HashMap<K, V>::rehash() {
-    const int old_capacity = map_capacity;
-    map_capacity = map_capacity * 2 + 1;
+template <typename T, typename U>
+void HashMap<T, U>::rehash() {
+    const int previous_map_capacity = map_capacity;
+    LinkedListKV<T, std::optional<U>>** old_lists = new LinkedListKV<T, std::optional<U>>*[previous_map_capacity];
+    for (int i=0; i < previous_map_capacity; i++) {
+        old_lists[i] = lists[i];
+    }
+
     map_size = 0;
-    std::array<DoublyList<std::pair<K, std::optional<V>>>*, old_capacity> data_copy = data;
-    data = std::array<DoublyList<std::pair<K, std::optional<V>>>, map_capacity>();
-    for (int i=0; i < data_copy.size(); i++) {
-        DoublyList<std::pair<K, std::optional<V>>> *list = data_copy[i];
+    map_capacity = map_capacity * 2 + 1;
+    const int new_map_capacity = map_capacity;
+    lists = new LinkedListKV<T, std::optional<U>>*[new_map_capacity];
+    for (int i=0; i < previous_map_capacity; i++) {
+        LinkedListKV<T, std::optional<U>> *list = old_lists[i];
         for (int j=0; j < list->size(); j++) {
-            std::pair<K, std::optional<V>> item = list[j];
-            add(item.first, item.second);
+            std::pair<T, std::optional<U>> item = list->get(j);
+            if (item.second.has_value()) {
+                add(item.first, item.second.value());
+            } else {
+                add(item.first);
+            }
         }
     }
+    delete [] old_lists;
 }
 
-template <typename K, typename V>
-void HashMap<K, V>::add(K key, V value) {
-    // add contains here 
-
-    std::pair<K, std::optional<V>> item = {key, value};
-    int index = hash(key);
-    while (data[index]->size() == MAX_CAPACITY) {
-        index = (index + 1) % capacity();
+template <typename T, typename U>
+void HashMap<T, U>::add(T key, U value) {
+    if (contains(key)) {
+        replace(key, value);
+        return;
     }
-    data[index]->add(item);
+
+    int index = hash(key);
+    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    while (list->size() == max_list_size) {
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    list->add(key, value);
     map_size++;
     if (size() >= capacity() / 2) {
         rehash();
     }
 }
 
-template <typename K, typename V>
-void HashMap<K, V>::add(K key) {
-    add(key, std::nullopt);
+template <typename T, typename U>
+void HashMap<T, U>::add(T key) {
+    if (contains(key)) {
+        return;
+    }
+
+    int index = hash(key);
+    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    while (list->size() == max_list_size) {
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    list->add(key, value);
+    map_size++;
+    if (size() >= capacity() / 2) {
+        rehash();
+    }
 }
 
-template <typename K, typename V>
-bool HashMap<K, V>::empty() {
+template <typename T, typename U>
+void HashMap<T, U>::remove(T key) {
+    if (!contains(key)) {
+        throw std::exception();
+    }
+
+    int index = hash(key);
+    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    while (!list->contains(key)) {
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    list->remove(key);
+    map_size--;
+}
+
+template <typename T, typename U>
+bool HashMap<T, U>::contains(T key) const {
+    int index = hash(key);
+    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    while (list->size() > 0) {
+        if (list->contains(key)) {
+            return true;
+        }
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    return false;
+}
+
+
+template <typename T, typename U>
+void HashMap<T, U>::replace(T key, U value) {
+    if (!contains(key)) {
+        throw std::exception();
+    }
+
+    int index = hash(key);
+    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    while (!list->contains(key)) {
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    list->replace(key, value);
+}
+
+template <typename T, typename U>
+bool HashMap<T, U>::empty() const {
     return map_size == 0;
 }
 
-template <typename K, typename V>
-int HashMap<K, V>::size() {
+template <typename T, typename U>
+int HashMap<T, U>::size() const {
     return map_size;
 }
 
-template <typename K, typename V>
-int HashMap<K, V>::capacity() {
+template <typename T, typename U>
+int HashMap<T, U>::capacity() const {
     return map_capacity;
+}
+
+template <typename T, typename U>
+void HashMap<T, U>::print() const {
+    std::cout << "{ ";
+    for (int i=0; i < map_capacity; i++) {
+        LinkedListKV<T, std::optional<U>> *list = lists[i];
+        for (int j=0; j < list->size(); j++) {
+            std::pair<T, std::optional<U>> item = list->get(j);
+            std::cout << item.first << ": " << item.second.value_or("null") << " ";
+        }
+    }
+    std::cout << "}\n";
 }
