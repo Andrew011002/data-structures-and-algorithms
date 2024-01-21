@@ -1,7 +1,14 @@
 template <typename T, typename U>
 HashMap<T, U>::HashMap() {
     for (int i=0; i < map_capacity; i++) {
-        lists[i] = new LinkedListKV<T, std::optional<U>>();
+        lists[i] = new LinkedListKV<T, U>();
+    }
+}
+
+template <typename T, typename U>
+HashMap<T, U>::HashMap(const std::vector<T> &vec):HashMap() {
+    for (T  &key: vec) {
+        add(key);
     }
 }
 
@@ -21,7 +28,7 @@ int HashMap<T, U>::hash(T key) const {
 template <typename T, typename U>
 void HashMap<T, U>::rehash() {
     const int previous_map_capacity = map_capacity;
-    LinkedListKV<T, std::optional<U>>** old_lists = new LinkedListKV<T, std::optional<U>>*[previous_map_capacity];
+    LinkedListKV<T, U>** old_lists = new LinkedListKV<T, U>*[previous_map_capacity];
     for (int i=0; i < previous_map_capacity; i++) {
         old_lists[i] = lists[i];
     }
@@ -29,9 +36,13 @@ void HashMap<T, U>::rehash() {
     map_size = 0;
     map_capacity = map_capacity * 2 + 1;
     const int new_map_capacity = map_capacity;
-    lists = new LinkedListKV<T, std::optional<U>>*[new_map_capacity];
+    lists = new LinkedListKV<T, U>*[new_map_capacity];
+    for (int i=0; i < new_map_capacity; i++) {
+        lists[i] = new LinkedListKV<T, U>();
+    }
+
     for (int i=0; i < previous_map_capacity; i++) {
-        LinkedListKV<T, std::optional<U>> *list = old_lists[i];
+        LinkedListKV<T, U> *list = old_lists[i];
         for (int j=0; j < list->size(); j++) {
             std::pair<T, std::optional<U>> item = list->get(j);
             if (item.second.has_value()) {
@@ -52,7 +63,7 @@ void HashMap<T, U>::add(T key, U value) {
     }
 
     int index = hash(key);
-    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    LinkedListKV<T, U> *list = lists[index];
     while (list->size() == max_list_size) {
         index = (index + 1) % capacity();
         list = lists[index];
@@ -71,12 +82,12 @@ void HashMap<T, U>::add(T key) {
     }
 
     int index = hash(key);
-    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    LinkedListKV<T, U> *list = lists[index];
     while (list->size() == max_list_size) {
         index = (index + 1) % capacity();
         list = lists[index];
     }
-    list->add(key, value);
+    list->add(key);
     map_size++;
     if (size() >= capacity() / 2) {
         rehash();
@@ -90,7 +101,7 @@ void HashMap<T, U>::remove(T key) {
     }
 
     int index = hash(key);
-    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    LinkedListKV<T, U> *list = lists[index];
     while (!list->contains(key)) {
         index = (index + 1) % capacity();
         list = lists[index];
@@ -102,8 +113,8 @@ void HashMap<T, U>::remove(T key) {
 template <typename T, typename U>
 bool HashMap<T, U>::contains(T key) const {
     int index = hash(key);
-    LinkedListKV<T, std::optional<U>> *list = lists[index];
-    while (list->size() > 0) {
+    LinkedListKV<T, U> *list = lists[index];
+    while (!(list->empty())) {
         if (list->contains(key)) {
             return true;
         }
@@ -121,7 +132,7 @@ void HashMap<T, U>::replace(T key, U value) {
     }
 
     int index = hash(key);
-    LinkedListKV<T, std::optional<U>> *list = lists[index];
+    LinkedListKV<T, U> *list = lists[index];
     while (!list->contains(key)) {
         index = (index + 1) % capacity();
         list = lists[index];
@@ -148,10 +159,16 @@ template <typename T, typename U>
 void HashMap<T, U>::print() const {
     std::cout << "{ ";
     for (int i=0; i < map_capacity; i++) {
-        LinkedListKV<T, std::optional<U>> *list = lists[i];
+        LinkedListKV<T, U> *list = lists[i];
         for (int j=0; j < list->size(); j++) {
             std::pair<T, std::optional<U>> item = list->get(j);
-            std::cout << item.first << ": " << item.second.value_or("null") << " ";
+            std::cout << item.first << ": ";
+            if (item.second.has_value()) {
+                std::cout << item.second.value();
+            } else {
+                std::cout << "null";
+            }
+            std::cout << " ";
         }
     }
     std::cout << "}\n";

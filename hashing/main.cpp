@@ -1,19 +1,28 @@
 #include <vector>
 #include <utility>
 #include <string>
-#include "linkedlist.hpp"
-// #include "hashmap.hpp"
+#include "hashmap.hpp"
 
 int main() {
-    LinkedListKV<std::string, int> list;
-    list.add("Andrew", 11);
-    list.print();
-    list.add("John");
-    list.print();
-    list.replace("John", 100);
-    list.print();
-    list.remove("John");
-    printf("Contains? %d\n", list.contains("John"));
-    printf("Contains? %d\n", list.contains("Andrew"));
-    list.print();
+    HashMap<std::string, int> map;
+    map.add("Andrew", 11);
+    map.print();
+    printf("size: %d\n", map.size());
+    map.add("Alexis");
+    map.print();
+    map.add("Caitlin", 29);
+    map.add("Brian");
+    map.replace("Andrew", 22);
+    map.add("Kim");
+    map.add("Austin");
+    map.print();
+    map.remove("Andrew");
+    map.add("Natalie", 15);
+    map.add("Terry", 17);
+    map.add("Maia", 55);
+    map.add("Kim", 20);
+    printf("Contains ? %d\n", map.contains("Andrew"));
+    map.replace("Terry", 83);
+    map.add("Austin", 69);
+    map.print();
 }

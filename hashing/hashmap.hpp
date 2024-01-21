@@ -7,14 +7,14 @@
 #include "linkedlist.hpp"
 
 const int MAX_LIST_SIZE = 10;
-const int INITIAL_CAPACITY = 19;
+const int INITIAL_CAPACITY = 5;
 
 template <typename T, typename U>
 class HashMap {
     int map_size = 0;
-    int map_capacity = 19;
+    int map_capacity = INITIAL_CAPACITY;
     const int max_list_size = MAX_LIST_SIZE;
-    LinkedListKV<T, std::optional<U>>** lists = new LinkedListKV<T, std::optional<U>>*[INITIAL_CAPACITY];
+    LinkedListKV<T, U>** lists = new LinkedListKV<T, U>*[INITIAL_CAPACITY];
 
 public:
     HashMap();
@@ -30,7 +30,7 @@ public:
     void replace(T key, U value);
     std::vector<T> keys() const;
     std::vector<U> values() const;
-    std::vector<std::pair<T, U>> items() const;
+    std::vector<std::pair<T, std::optional<U>>> items() const;
     bool empty() const;
     int size() const;
     int capacity() const;
