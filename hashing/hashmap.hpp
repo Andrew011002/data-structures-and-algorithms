@@ -7,7 +7,7 @@
 #include "linkedlist.hpp"
 
 const int MAX_LIST_SIZE = 10;
-const int INITIAL_CAPACITY = 5;
+const int INITIAL_CAPACITY = 19;
 
 template <typename T, typename U>
 class HashMap {

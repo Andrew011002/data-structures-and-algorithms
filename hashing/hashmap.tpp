@@ -7,14 +7,14 @@ HashMap<T, U>::HashMap() {
 
 template <typename T, typename U>
 HashMap<T, U>::HashMap(const std::vector<T> &vec):HashMap() {
-    for (T  &key: vec) {
+    for (T key: vec) {
         add(key);
     }
 }
 
 template <typename T, typename U>
 HashMap<T, U>::HashMap(const std::vector<std::pair<T, U>> &vec):HashMap() {
-    for (std::pair<T, U> &item: vec) {
+    for (std::pair<T, U> item: vec) {
         add(item.first, item.second);
     }
 }
@@ -94,6 +94,28 @@ void HashMap<T, U>::add(T key) {
     }
 }
 
+
+template <typename T, typename U>
+std::optional<U> HashMap<T, U>::get(T key) const {
+    if (!contains(key)) {
+        throw std::exception();
+    }
+
+    int index = hash(key);
+    LinkedListKV<T, U> *list = lists[index];
+    while (!list->contains(key)) {
+        index = (index + 1) % capacity();
+        list = lists[index];
+    }
+    for (int i=0; i < list->size(); i++) {
+        std::pair<T, std::optional<U>> item = list->get(i);
+        if (item.first == key) {
+            return item.second;
+        }
+    }
+    return std::nullopt;
+}
+
 template <typename T, typename U>
 void HashMap<T, U>::remove(T key) {
     if (!contains(key)) {
@@ -138,6 +160,48 @@ void HashMap<T, U>::replace(T key, U value) {
         list = lists[index];
     }
     list->replace(key, value);
+}
+
+template <typename T, typename U>
+std::vector<T> HashMap<T, U>::keys() const {
+    std::vector<T> vec;
+    for (int i=0; i < map_capacity; i++) {
+        LinkedListKV<T, U> *list = lists[i];
+        for (int j=0; j < list->size(); j++) {
+            T key = list->get(j).first;
+            vec.push_back(key);
+        }
+    }
+    return vec;
+}
+
+
+template <typename T, typename U>
+std::vector<U> HashMap<T, U>::values() const {
+    std::vector<U> vec;
+    for (int i=0; i < map_capacity; i++) {
+        LinkedListKV<T, U> *list = lists[i];
+        for (int j=0; j < list->size(); j++) {
+            std::optional<U> value = list->get(j).second;
+            if (value.has_value()) {
+                vec.push_back(value.value());
+            }
+        }
+    }
+    return vec;
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> HashMap<T, U>::items() const {
+    std::vector<std::pair<T, std::optional<U>>> vec;
+    for (int i=0; i < map_capacity; i++) {
+        LinkedListKV<T, U> *list = lists[i];
+        for (int j=0; j < list->size(); j++) {
+            std::pair<T, std::optional<U>> item = list->get(j);
+            vec.push_back(item);
+        }
+    }
+    return vec;
 }
 
 template <typename T, typename U>
