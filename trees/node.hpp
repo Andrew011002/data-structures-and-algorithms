@@ -1,7 +1,5 @@
 #include <iostream>
 #include <optional>
-#include <string>
-#include <vector>
 
 template <typename T, typename U> class Node {
   T m_key;
@@ -22,13 +20,13 @@ public:
   Node<T, U> *right() const { return m_right; }
   void addleft(Node<T, U> *node) { m_left = node; }
   void addright(Node<T, U> *node) { m_right = node; }
-  void print() const { 
-        std::cout << m_key << ": ";
-        if (m_value.has_value()) {
-            std::cout << m_value;
-        } else {
-            std::cout << "null";
-        }
-        std::cout << "\n";
+  void print() const {
+    std::cout << m_key << ": ";
+    if (m_value.has_value()) {
+      std::cout << m_value.value();
+    } else {
+      std::cout << "null";
     }
+    std::cout << "\n";
+  }
 };
