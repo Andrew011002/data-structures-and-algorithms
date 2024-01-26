@@ -20,6 +20,7 @@ public:
   void add(T key);
   void add(T key, U value);
   void remove(T key);
+  Node<T, U> *add_helper(Node<T, U> *node);
   std::optional<U> get(T key) const;
   bool contains(T key) const;
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
@@ -41,11 +42,17 @@ BST<T, U>::BST(std::function<bool(T)> comparator)
     : root(nullptr), m_comparator(comparator), m_size(0), m_height(0){};
 
 template <typename T, typename U> void BST<T, U>::add(T key) {
-    if (empty()) {
-        root = new Node<T, U>(key);
-    } else {
-    }
-    m_size++;
+  Node<T, U> *node = new Node<T, U>(key);
+  if (empty()) {
+    root = node;
+  } else {
+    Node<T, U> *node = root;
+  }
+  m_size++;
+}
+
+template <typename T, typename U> Node<T, U> *add_helper(Node<T, U> *node, Node<T, U> *other) {
+
 }
 
 template <typename T, typename U> bool BST<T, U>::empty() const {

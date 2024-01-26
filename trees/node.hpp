@@ -23,6 +23,9 @@ public:
   Node<T, U> *right() const { return m_right; }
   void addleft(Node<T, U> *node) { m_left = node; }
   void addright(Node<T, U> *node) { m_right = node; }
+  bool hasleft() const { return m_left != nullptr; }
+  bool hasright() const { return m_right != nullptr; }
+  bool single() const { return (hasleft() == false) && (hasright() == false); }
   void print() const {
     std::cout << m_key << ": ";
     if (m_value.has_value()) {
