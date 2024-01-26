@@ -2,7 +2,6 @@
 #define BST_HEADER
 
 #include "node.hpp"
-#include <cctype>
 #include <functional>
 #include <iostream>
 #include <optional>
