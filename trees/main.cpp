@@ -1,11 +1,12 @@
-#include "node.hpp"
 #include "bst.hpp"
-#include <cstdio>
 
 int main() {
-    Node<int, int> node = Node<int, int>(10);
     BST<int, int> tree;
-    node.print();
-    printf("%d\n", node.single());
+    tree.add(10);
+    tree.add(11);
+    tree.add(9);
+    tree.print("preorder");
+    tree.print("inorder");
+    tree.print("postorder");
     return 0;
 }
