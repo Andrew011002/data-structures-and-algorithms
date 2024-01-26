@@ -54,6 +54,16 @@ template <typename T, typename U> void BST<T, U>::add(T key) {
   m_size++;
 }
 
+template <typename T, typename U> void BST<T, U>::add(T key, U value) {
+  Node<T, U> *node = new Node<T, U>(key, value);
+  if (empty()) {
+    root = node;
+  } else {
+    add_helper(root, node);
+  }
+  m_size++;
+}
+
 template <typename T, typename U>
 void BST<T, U>::add_helper(Node<T, U> *curr, Node<T, U> *node) {
   bool goleft = m_comparator(curr->key(), node->key());
