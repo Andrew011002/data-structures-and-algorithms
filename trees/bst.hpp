@@ -21,10 +21,11 @@ public:
 
   void add(T key);
   void add(T key, U value);
-  void remove(T key);
   void add_helper(Node<T, U> *curr, Node<T, U> *node);
+  void remove(T key);
   std::optional<U> get(T key) const;
   bool contains(T key) const;
+  bool contains_helper(const Node<T, U> *node, T key) const;
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
   std::vector<std::pair<T, std::optional<U>>> inorder() const;
   std::vector<std::pair<T, std::optional<U>>> postorder() const;
@@ -76,6 +77,28 @@ void BST<T, U>::add_helper(Node<T, U> *curr, Node<T, U> *node) {
   } else {
     curr->addright(node);
   }
+}
+
+template <typename T, typename U> bool BST<T, U>::contains(T key) const {
+  if (empty()) {
+    return false;
+  }
+    return contains_helper(root, key);
+}
+
+template <typename T, typename U>
+bool BST<T, U>::contains_helper(const Node<T, U> *node, T key) const {
+  if (node == nullptr) {
+    return false;
+  }
+  if (node->key() == key) {
+    return true;
+  }
+  bool goleft = m_comparator(node->key(), key);
+  if (goleft) {
+    return contains_helper(node->left(), key);
+  }
+  return contains_helper(node->right(), key);
 }
 
 template <typename T, typename U> bool BST<T, U>::empty() const {

@@ -1,4 +1,5 @@
 #include "bst.hpp"
+#include <cstdio>
 
 int main() {
     BST<int, int> tree;
@@ -8,5 +9,7 @@ int main() {
     tree.print("preorder");
     tree.print("inorder");
     tree.print("postorder");
+    printf("Contains ? %d\n", tree.contains(5));
+    printf("Contains ? %d\n", tree.contains(11));
     return 0;
 }
