@@ -11,5 +11,20 @@ int main() {
     tree.print("postorder");
     printf("Contains ? %d\n", tree.contains(5));
     printf("Contains ? %d\n", tree.contains(11));
+    auto vec = tree.preorder();
+    for (auto item: vec) {
+        std::cout << item.first << " ";
+    }
+    std::cout << "\n";
+    vec = tree.inorder();
+    for (auto item: vec) {
+        std::cout << item.first << " ";
+    }
+    std::cout << "\n";
+    vec = tree.postorder();
+    for (auto item: vec) {
+        std::cout << item.first << " ";
+    }
+    std::cout << "\n";
     return 0;
 }

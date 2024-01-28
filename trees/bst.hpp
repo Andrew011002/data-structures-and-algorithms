@@ -3,7 +3,6 @@
 
 #include "node.hpp"
 #include <functional>
-#include <iostream>
 #include <optional>
 #include <string>
 #include <utility>
@@ -27,8 +26,17 @@ public:
   bool contains(T key) const;
   bool contains_helper(const Node<T, U> *node, T key) const;
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
+  std::vector<std::pair<T, std::optional<U>>>
+  preorder_helper(Node<T, U> *node,
+                  std::vector<std::pair<T, std::optional<U>>> &vec) const;
   std::vector<std::pair<T, std::optional<U>>> inorder() const;
+  std::vector<std::pair<T, std::optional<U>>>
+  inorder_helper(Node<T, U> *node,
+                 std::vector<std::pair<T, std::optional<U>>> &vec) const;
   std::vector<std::pair<T, std::optional<U>>> postorder() const;
+  std::vector<std::pair<T, std::optional<U>>>
+  postorder_helper(Node<T, U> *node,
+                   std::vector<std::pair<T, std::optional<U>>> &vec) const;
   bool empty() const;
   int size() const;
   int height() const;
@@ -83,7 +91,7 @@ template <typename T, typename U> bool BST<T, U>::contains(T key) const {
   if (empty()) {
     return false;
   }
-    return contains_helper(root, key);
+  return contains_helper(root, key);
 }
 
 template <typename T, typename U>
@@ -101,6 +109,62 @@ bool BST<T, U>::contains_helper(const Node<T, U> *node, T key) const {
   return contains_helper(node->right(), key);
 }
 
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::preorder() const {
+  std::vector<std::pair<T, std::optional<U>>> vec;
+  return preorder_helper(root, vec);
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::preorder_helper(
+    Node<T, U> *node, std::vector<std::pair<T, std::optional<U>>> &vec) const {
+  if (node == nullptr) {
+    return vec;
+  }
+  vec.push_back(std::pair<T, std::optional<U>>(
+      node->key(), std::optional<U>(node->value())));
+  preorder_helper(node->left(), vec);
+  preorder_helper(node->right(), vec);
+  return vec;
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::inorder() const {
+  std::vector<std::pair<T, std::optional<U>>> vec;
+  return inorder_helper(root, vec);
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::inorder_helper(
+    Node<T, U> *node, std::vector<std::pair<T, std::optional<U>>> &vec) const {
+  if (node == nullptr) {
+    return vec;
+  }
+  inorder_helper(node->left(), vec);
+  vec.push_back(std::pair<T, std::optional<U>>(
+      node->key(), std::optional<U>(node->value())));
+  inorder_helper(node->right(), vec);
+  return vec;
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::postorder() const {
+  std::vector<std::pair<T, std::optional<U>>> vec;
+  return postorder_helper(root, vec);
+}
+
+template <typename T, typename U>
+std::vector<std::pair<T, std::optional<U>>> BST<T, U>::postorder_helper(
+    Node<T, U> *node, std::vector<std::pair<T, std::optional<U>>> &vec) const {
+  if (node == nullptr) {
+    return vec;
+  }
+  postorder_helper(node->left(), vec);
+  postorder_helper(node->right(), vec);
+  vec.push_back(std::pair<T, std::optional<U>>(
+      node->key(), std::optional<U>(node->value())));
+  return vec;
+}
 template <typename T, typename U> bool BST<T, U>::empty() const {
   return m_size == 0;
 }
