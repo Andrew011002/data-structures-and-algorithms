@@ -21,6 +21,12 @@ public:
   std::optional<U> value() const { return m_value; }
   Node<T, U> *left() const { return m_left; }
   Node<T, U> *right() const { return m_right; }
+  void setkey(T key) { m_key = key; }
+  void setvalue(std::optional<U> value) { m_value = value; }
+  void set(T key, std::optional<U> value) {
+    setkey(key);
+    setvalue(value);
+  };
   void addleft(Node<T, U> *node) { m_left = node; }
   void addright(Node<T, U> *node) { m_right = node; }
   bool hasleft() const { return m_left != nullptr; }

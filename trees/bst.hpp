@@ -26,7 +26,8 @@ public:
   bool contains(const T key) const;
   bool contains_helper(const Node<T, U> *node, const T key) const;
   void remove(const T key);
-Node<T, U> *remove_helper(Node<T, U> *node);
+  Node<T, U> *remove_helper(Node<T, U> *node, const T key);
+  Node<T, U> *get_replace_node(Node<T, U> *node);
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
   std::vector<std::pair<T, std::optional<U>>>
   preorder_helper(Node<T, U> *node,
@@ -78,10 +79,10 @@ void BST<T, U>::add(const T key, const U value) {
 
 template <typename T, typename U>
 void BST<T, U>::add_helper(Node<T, U> *curr, Node<T, U> *node) {
-  bool goleft = m_comparator(curr->key(), node->key());
-  if (goleft && curr->hasleft()) {
+  bool go_left = m_comparator(curr->key(), node->key());
+  if (go_left && curr->hasleft()) {
     add_helper(curr->left(), node);
-  } else if (goleft) {
+  } else if (go_left) {
     curr->addleft(node);
   } else if (curr->hasright()) {
     add_helper(curr->right(), node);
@@ -105,23 +106,61 @@ bool BST<T, U>::contains_helper(const Node<T, U> *node, const T key) const {
   if (node->key() == key) {
     return true;
   }
-  bool goleft = m_comparator(node->key(), key);
-  if (goleft) {
+  bool go_left = m_comparator(node->key(), key);
+  if (go_left) {
     return contains_helper(node->left(), key);
   }
   return contains_helper(node->right(), key);
 }
 
-template <typename T, typename U>
-void BST<T, U>::remove(const T key) {
-    if (contains(key) == false) {
-        throw std::exception();
-    }
-
+template <typename T, typename U> void BST<T, U>::remove(const T key) {
+  if (contains(key) == false) {
+    throw std::exception();
+  }
+  if (size() == 1) {
+    delete root;
+    root = nullptr;
+  } else {
+    Node<T, U> *_ = remove_helper(root, key);
+  }
+  m_size--;
 }
 
 template <typename T, typename U>
-Node<T, U> *
+Node<T, U> *BST<T, U>::remove_helper(Node<T, U> *node, const T key) {
+  if (node == nullptr) {
+    return nullptr;
+  }
+
+  if ((node->key() != key) && m_comparator(node->key(), key)) {
+    node->addleft(remove_helper(node->left(), key));
+  } else if ((node->key() != key)) {
+    node->addright(remove_helper(node->right(), key));
+  } else {
+    if (node->hasleft() == false) {
+      Node<T, U> *tmp = node->right();
+      delete node;
+      return tmp;
+    } else if (node->hasright() == false) {
+      Node<T, U> *tmp = node->left();
+      delete node;
+      return tmp;
+    } else {
+      Node<T, U> *replace_node = get_replace_node(node->right());
+      node->set(replace_node->key(), replace_node->value());
+      node->addright(remove_helper(node->right(), replace_node->key()));
+    }
+  }
+  return node;
+}
+
+template <typename T, typename U>
+Node<T, U> *BST<T, U>::get_replace_node(Node<T, U> *node) {
+  while (node && node->hasleft()) {
+    node = node->left();
+  }
+  return node;
+}
 
 template <typename T, typename U>
 std::vector<std::pair<T, std::optional<U>>> BST<T, U>::preorder() const {

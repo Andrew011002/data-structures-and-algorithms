@@ -28,5 +28,7 @@ int main() {
     std::cout << "\n";
 
     printf("Size: %d\n", tree.size());
+    tree.remove(10);
+    tree.print();
     return 0;
 }
