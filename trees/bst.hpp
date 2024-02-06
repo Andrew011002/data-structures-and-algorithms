@@ -2,6 +2,7 @@
 #define BST_HEADER
 
 #include "node.hpp"
+#include <exception>
 #include <functional>
 #include <optional>
 #include <string>
@@ -21,10 +22,11 @@ public:
   void add(const T key);
   void add(const T key, const U value);
   void add_helper(Node<T, U> *curr, Node<T, U> *node);
-  void remove(const T key);
   std::optional<U> get(const T key) const;
   bool contains(const T key) const;
   bool contains_helper(const Node<T, U> *node, const T key) const;
+  void remove(const T key);
+Node<T, U> *remove_helper(Node<T, U> *node);
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
   std::vector<std::pair<T, std::optional<U>>>
   preorder_helper(Node<T, U> *node,
@@ -109,6 +111,17 @@ bool BST<T, U>::contains_helper(const Node<T, U> *node, const T key) const {
   }
   return contains_helper(node->right(), key);
 }
+
+template <typename T, typename U>
+void BST<T, U>::remove(const T key) {
+    if (contains(key) == false) {
+        throw std::exception();
+    }
+
+}
+
+template <typename T, typename U>
+Node<T, U> *
 
 template <typename T, typename U>
 std::vector<std::pair<T, std::optional<U>>> BST<T, U>::preorder() const {
