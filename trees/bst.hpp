@@ -23,8 +23,8 @@ public:
   void add_helper(Node<T, U> *curr, Node<T, U> *node);
   void remove(T key);
   std::optional<U> get(T key) const;
-  bool contains(T key) const;
-  bool contains_helper(const Node<T, U> *node, T key) const;
+  bool contains(const T key) const;
+  bool contains_helper(const Node<T, U> *node, const T key) const;
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
   std::vector<std::pair<T, std::optional<U>>>
   preorder_helper(Node<T, U> *node,
@@ -87,7 +87,7 @@ void BST<T, U>::add_helper(Node<T, U> *curr, Node<T, U> *node) {
   }
 }
 
-template <typename T, typename U> bool BST<T, U>::contains(T key) const {
+template <typename T, typename U> bool BST<T, U>::contains(const T key) const {
   if (empty()) {
     return false;
   }
@@ -95,7 +95,7 @@ template <typename T, typename U> bool BST<T, U>::contains(T key) const {
 }
 
 template <typename T, typename U>
-bool BST<T, U>::contains_helper(const Node<T, U> *node, T key) const {
+bool BST<T, U>::contains_helper(const Node<T, U> *node, const T key) const {
   if (node == nullptr) {
     return false;
   }
