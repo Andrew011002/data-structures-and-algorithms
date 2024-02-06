@@ -23,11 +23,12 @@ public:
   void add(const T key, const U value);
   void add_helper(Node<T, U> *curr, Node<T, U> *node);
   std::optional<U> get(const T key) const;
+  std::optional<U> get_helper(const Node<T, U> *node, const T key) const;
   bool contains(const T key) const;
   bool contains_helper(const Node<T, U> *node, const T key) const;
   void remove(const T key);
   Node<T, U> *remove_helper(Node<T, U> *node, const T key);
-  Node<T, U> *get_replace_node(Node<T, U> *node);
+  Node<T, U> *get_min_node(Node<T, U> *node);
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
   std::vector<std::pair<T, std::optional<U>>>
   preorder_helper(Node<T, U> *node,
@@ -91,6 +92,25 @@ void BST<T, U>::add_helper(Node<T, U> *curr, Node<T, U> *node) {
   }
 }
 
+template <typename T, typename U>
+std::optional<U> BST<T, U>::get(const T key) const {
+  if (contains(key) == false) {
+    throw std::exception();
+  }
+  return get_helper(root, key);
+}
+
+template <typename T, typename U>
+std::optional<U> BST<T, U>::get_helper(const Node<T, U> *node, const T key) const {
+  if (node->key() == key) {
+    return node->value();
+  }
+  if (node->hasleft() && m_comparator(node->key(), key)) {
+    return get_helper(node->left(), key);
+  }
+  return get_helper(node->right(), key);
+}
+
 template <typename T, typename U> bool BST<T, U>::contains(const T key) const {
   if (empty()) {
     return false;
@@ -146,16 +166,16 @@ Node<T, U> *BST<T, U>::remove_helper(Node<T, U> *node, const T key) {
       delete node;
       return tmp;
     } else {
-      Node<T, U> *replace_node = get_replace_node(node->right());
-      node->set(replace_node->key(), replace_node->value());
-      node->addright(remove_helper(node->right(), replace_node->key()));
+      Node<T, U> *min_node = get_min_node(node->right());
+      node->set(min_node->key(), min_node->value());
+      node->addright(remove_helper(node->right(), min_node->key()));
     }
   }
   return node;
 }
 
 template <typename T, typename U>
-Node<T, U> *BST<T, U>::get_replace_node(Node<T, U> *node) {
+Node<T, U> *BST<T, U>::get_min_node(Node<T, U> *node) {
   while (node && node->hasleft()) {
     node = node->left();
   }

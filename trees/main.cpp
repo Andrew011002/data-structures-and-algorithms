@@ -1,34 +1,18 @@
 #include "bst.hpp"
-#include <cstdio>
+#include <optional>
+#include <string>
 
-int main() {
-    BST<int, int> tree;
-    tree.add(10);
-    tree.add(11, 25);
-    tree.add(9);
-    tree.print("preorder");
-    tree.print("inorder");
-    tree.print("postorder");
-    printf("Contains ? %d\n", tree.contains(5));
-    printf("Contains ? %d\n", tree.contains(11));
-    auto vec = tree.preorder();
-    for (auto item: vec) {
-        std::cout << item.first << " ";
-    }
-    std::cout << "\n";
-    vec = tree.inorder();
-    for (auto item: vec) {
-        std::cout << item.first << " ";
-    }
-    std::cout << "\n";
-    vec = tree.postorder();
-    for (auto item: vec) {
-        std::cout << item.first << " ";
-    }
-    std::cout << "\n";
-
-    printf("Size: %d\n", tree.size());
-    tree.remove(10);
+int main() { BST<std::string, int> tree; 
+    tree.add("John", 15);
+    tree.add("Mike", 21);
+    tree.add("Bill", 19);
+    tree.add("Sarah", 18);
     tree.print();
-    return 0;
+    tree.remove("Sarah");
+    tree.print();
+    tree.add("Rufus");
+    tree.print();
+    printf("%s -> %d\n", "John", tree.get("John").value_or(-1));
+    printf("Size: %d\n", tree.size());
+    printf("%s -> %d\n", "Rufus", tree.get("Rufus").value_or(-1));
 }
