@@ -26,5 +26,7 @@ int main() {
         std::cout << item.first << " ";
     }
     std::cout << "\n";
+
+    printf("Size: %d\n", tree.size());
     return 0;
 }

@@ -18,11 +18,11 @@ public:
   BST();
   BST(std::function<bool(T)> comparator);
 
-  void add(T key);
-  void add(T key, U value);
+  void add(const T key);
+  void add(const T key, const U value);
   void add_helper(Node<T, U> *curr, Node<T, U> *node);
-  void remove(T key);
-  std::optional<U> get(T key) const;
+  void remove(const T key);
+  std::optional<U> get(const T key) const;
   bool contains(const T key) const;
   bool contains_helper(const Node<T, U> *node, const T key) const;
   std::vector<std::pair<T, std::optional<U>>> preorder() const;
@@ -53,7 +53,7 @@ template <typename T, typename U>
 BST<T, U>::BST(std::function<bool(T)> comparator)
     : root(nullptr), m_comparator(comparator), m_size(0), m_height(0){};
 
-template <typename T, typename U> void BST<T, U>::add(T key) {
+template <typename T, typename U> void BST<T, U>::add(const T key) {
   Node<T, U> *node = new Node<T, U>(key);
   if (empty()) {
     root = node;
@@ -63,7 +63,8 @@ template <typename T, typename U> void BST<T, U>::add(T key) {
   m_size++;
 }
 
-template <typename T, typename U> void BST<T, U>::add(T key, U value) {
+template <typename T, typename U>
+void BST<T, U>::add(const T key, const U value) {
   Node<T, U> *node = new Node<T, U>(key, value);
   if (empty()) {
     root = node;
@@ -165,6 +166,9 @@ std::vector<std::pair<T, std::optional<U>>> BST<T, U>::postorder_helper(
       node->key(), std::optional<U>(node->value())));
   return vec;
 }
+
+template <typename T, typename U> int BST<T, U>::size() const { return m_size; }
+
 template <typename T, typename U> bool BST<T, U>::empty() const {
   return m_size == 0;
 }
